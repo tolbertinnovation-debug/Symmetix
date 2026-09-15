@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Symmetrix">
+  <rect width="64" height="64" rx="12" fill="#0B5730"/>
+  <circle cx="32" cy="32" r="24" fill="none" stroke="#ffffff" stroke-width="2" opacity=".5"/>
+  <path d="M16 46c7-1.4 12-5 12-9 0-5.2-10-5-10-10.8C18 21 25 17 33.5 17c6.8 0 12 2.2 15 5.9" fill="none" stroke="#F07C1A" stroke-width="3.6" stroke-linecap="round"/>
+  <g>
+    <rect x="21" y="21" width="10" height="10" rx="1.4" fill="#ffffff"/>
+    <rect x="33" y="21" width="10" height="10" rx="1.4" fill="#F07C1A"/>
+    <rect x="21" y="33" width="10" height="10" rx="1.4" fill="#F07C1A"/>
+    <rect x="33" y="33" width="10" height="10" rx="1.4" fill="#ffffff"/>
+  </g>
+</svg>
