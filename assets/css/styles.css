@@ -219,7 +219,7 @@ strong { font-weight: 650; color: var(--ink); }
 
 .brand { display: inline-flex; align-items: center; gap: .7rem; color: var(--green-900); }
 .brand:hover { color: var(--green-900); }
-.brand-mark { width: 46px; height: 46px; flex: none; }
+.brand-mark { width: 50px; height: 50px; flex: none; object-fit: contain; }
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name {
   font-family: var(--font-display); font-weight: 700; font-size: 1.28rem;
@@ -696,7 +696,10 @@ strong { font-weight: 650; color: var(--ink); }
 }
 
 /* ---------- 15. Contextual mark colours & link cards ---------- */
-.site-footer .brand-mark { --mark-green: #FFFFFF; }
+.site-footer .brand-mark {
+  background: #fff; border-radius: 11px; padding: 3px;
+  width: 52px; height: 52px;
+}
 .site-footer .brand:hover { color: #fff; }
 a.card { color: inherit; }
 a.card:hover { color: inherit; }

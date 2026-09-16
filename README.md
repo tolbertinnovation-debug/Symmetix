@@ -24,8 +24,8 @@ framework. Drop the folder on any web host and it works.
 | `404.html` | Not-found page |
 
 Supporting files: `assets/css/styles.css`, `assets/js/main.js`,
-`assets/img/` (logo, cropped emblem, favicon), `robots.txt`, `sitemap.xml`,
-`.nojekyll`.
+`assets/img/` (logo assets — see below), `robots.txt`, `sitemap.xml`,
+`.nojekyll`, `.github/workflows/deploy-pages.yml`.
 
 ## Design system
 
@@ -44,11 +44,34 @@ so the whole site can be re-themed from one block.
   from 360 px to 1440 px+ with no breakpoint jumps.
 - **Layout:** intrinsic CSS Grid (`auto-fit` + `minmax`), so sections reflow
   instead of relying on device-specific media queries.
-- **Logo mark:** the header, drawer and footer use an inline SVG derived from the
-  corporate mark (globe, four quadrants, orange arc) that recolours itself for
-  light and dark grounds. The full original artwork appears on the About page,
-  and `assets/img/symmetrix-emblem.jpg` is the emblem cropped out of it for the
-  hero.
+### Logo assets
+
+Every mark on the site is the supplied artwork; nothing is redrawn. Each file is
+derived from `symmetrix-logo.jpg` and sized for where it is used.
+
+| File | Size | Used for |
+| --- | --- | --- |
+| `symmetrix-logo.jpg` | 1254px | The full lockup, shown on the About page |
+| `symmetrix-mark.png` | 256px | Header, mobile drawer and footer mark (50px on screen) |
+| `symmetrix-emblem.jpg` | 640px | The hero, inside the white circle |
+| `apple-touch-icon.png` | 180px | iOS home screen and bookmarks |
+| `favicon-32.png` | 32px | Browser tab, for browsers without SVG favicon support |
+| `favicon.svg` | vector | Browser tab — see the note below |
+
+Two details worth knowing before regenerating any of them:
+
+- `symmetrix-mark.png` has its background flattened to pure `#FFFFFF`. The
+  original JPEG's background carries compression noise, which shows as a faint
+  box around the logo against the white header. The flattening threshold keeps
+  the light-grey continents inside the globe intact.
+- The header is white and the footer is dark green, so the footer mark sits on a
+  white rounded-square tile. A circular tile was rejected because it clips the
+  aeroplane and the tail of the orange swoosh.
+- `favicon.svg` is the one deliberate exception: a simplified mark (globe ring,
+  four quadrants, orange arc) in the brand colours. At 16-32px the full artwork
+  reduces to an unreadable blur, so the tab icon uses a simplified derivative —
+  standard practice for detailed logos. `apple-touch-icon.png` and every on-page
+  mark use the real artwork, because at those sizes it reads properly.
 
 ## Behaviour (`assets/js/main.js`)
 
