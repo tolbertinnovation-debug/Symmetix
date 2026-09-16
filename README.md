@@ -98,12 +98,49 @@ python3 -m http.server 8000
 
 ## Deploying
 
-The site is plain static files, so any of these work as-is:
+### GitHub Pages (current setup)
 
-- **GitHub Pages** — Settings → Pages → deploy from this branch, root folder.
-  (`.nojekyll` is already included so `assets/` is served untouched.)
+`.github/workflows/deploy-pages.yml` publishes `main` to GitHub Pages on every
+push. **Pages has to be switched on once by hand before the workflow can
+succeed** — the Actions token is not allowed to create a Pages site that has
+never existed (`Resource not accessible by integration`).
+
+1. Settings → Pages → **Source: GitHub Actions**
+2. Actions → *Deploy site to GitHub Pages* → **Re-run all jobs** (or just push)
+
+The site then serves from:
+
+    https://tolbertinnovation-debug.github.io/Symmetix/
+
+All internal links are relative, so the sub-path works without changes.
+
+### Other hosts
+
+Plain static files, so these work as-is:
+
 - **Netlify / Vercel / Cloudflare Pages** — no build command, publish directory `/`.
 - **Any shared host / cPanel** — upload the folder contents to `public_html`.
+  (`.nojekyll` only matters on GitHub Pages; it stops Jekyll touching `assets/`.)
+
+### Moving to a custom domain
+
+The canonical URLs, Open Graph tags, `sitemap.xml` and `robots.txt` currently
+point at the GitHub Pages URL, because that is where the site is served. When a
+real domain is ready:
+
+1. Add a `CNAME` file at the repository root containing just the domain.
+2. Point DNS at GitHub Pages (`A` records to GitHub's IPs, or a `CNAME` to
+   `tolbertinnovation-debug.github.io`), then set the domain in Settings → Pages.
+3. Rewrite the URLs in one pass:
+
+   ```bash
+   grep -rl "tolbertinnovation-debug.github.io/Symmetix" . \
+     --include="*.html" --include="*.xml" --include="*.txt" \
+     | xargs sed -i "s|https://tolbertinnovation-debug.github.io/Symmetix|https://www.yourdomain.com|g"
+   ```
+
+Leaving canonical tags pointing at a domain that does not resolve will keep the
+site out of search results, so do step 3 whenever the hosting URL changes.
 
 ---
 
@@ -125,8 +162,8 @@ real details.
 3. **Business hours** — Mon–Fri 8:30–17:30 and Sat 9:00–13:00 are assumed. They
    appear in the footer, on `contact.html`, and in the JSON-LD
    `openingHoursSpecification`.
-4. **Domain** — canonical URLs, `sitemap.xml`, `robots.txt` and the Open Graph
-   tags use `https://www.symmetrixholdings.com`. Replace with the real domain.
+4. **Domain** — the site is canonicalised to the GitHub Pages URL. See
+   "Moving to a custom domain" above when a real domain is ready.
 5. **Social profiles** — the footer deliberately links only to real, working
    channels (WhatsApp, email, phone). Add Facebook / LinkedIn / Instagram links
    to the `.socials` block in the footer when the accounts exist.

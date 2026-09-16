@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.symmetrixholdings.com/sitemap.xml
+Sitemap: https://tolbertinnovation-debug.github.io/Symmetix/sitemap.xml
