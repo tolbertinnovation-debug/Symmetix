@@ -25,7 +25,7 @@ framework. Drop the folder on any web host and it works.
 
 Supporting files: `assets/css/styles.css`, `assets/js/main.js`,
 `assets/img/` (logo assets — see below), `robots.txt`, `sitemap.xml`,
-`.nojekyll`, `.github/workflows/deploy-pages.yml`.
+`.nojekyll`.
 
 ## Design system
 
@@ -123,19 +123,16 @@ python3 -m http.server 8000
 
 ### GitHub Pages (current setup)
 
-`.github/workflows/deploy-pages.yml` publishes `main` to GitHub Pages on every
-push. **Pages has to be switched on once by hand before the workflow can
-succeed** — the Actions token is not allowed to create a Pages site that has
-never existed (`Resource not accessible by integration`).
+Pages is configured as **Settings → Pages → Deploy from a branch → `main` /
+`(root)`**. GitHub's own builder publishes on every push to `main`; there is no
+workflow file and no build step. `.nojekyll` is what stops Jekyll from ignoring
+`assets/`.
 
-1. Settings → Pages → **Source: GitHub Actions**
-2. Actions → *Deploy site to GitHub Pages* → **Re-run all jobs** (or just push)
-
-The site then serves from:
+Live at:
 
     https://tolbertinnovation-debug.github.io/Symmetix/
 
-All internal links are relative, so the sub-path works without changes.
+All internal links are relative, so serving from a sub-path needs no changes.
 
 ### Other hosts
 
