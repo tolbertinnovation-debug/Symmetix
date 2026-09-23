@@ -69,9 +69,14 @@ const SCRIPT = () => {
   let fails = 0, checked = 0;
   for (const scheme of ['light','dark']) {
     for (const name of PAGES) {
-      const ctx = await b.newContext({ viewport:{width:1440,height:1000}, colorScheme: scheme });
+      // The site defaults to light regardless of the OS setting, so dark has to
+      // be requested the way a visitor requests it: the stored preference.
+      const ctx = await b.newContext({ viewport:{width:1440,height:1000} });
+      await ctx.addInitScript(t => { try { localStorage.setItem('sx-theme', t); } catch (e) {} }, scheme);
       const p = await ctx.newPage();
       await p.goto(ROOT + name + '.html');
+      const applied = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+      if (applied !== scheme) { console.log(`  !! ${name}: expected data-theme=${scheme}, got ${applied}`); }
       await p.evaluate(async()=>{await document.fonts.ready;});
       await p.evaluate(() => document.querySelectorAll('.reveal').forEach(e=>e.classList.add('is-in')));
       await p.evaluate(() => document.querySelectorAll('details').forEach(d=>d.open = true));

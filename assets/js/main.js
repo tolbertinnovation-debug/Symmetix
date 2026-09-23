@@ -12,11 +12,11 @@
   (function theme() {
     var buttons = document.querySelectorAll('[data-theme-toggle]');
     if (!buttons.length) return;
-    var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
+    // Light is the site default. The OS preference is deliberately not
+    // consulted — dark only applies once the visitor asks for it here.
     var current = function () {
-      var set = root.getAttribute('data-theme');
-      return set || (systemDark.matches ? 'dark' : 'light');
+      return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     };
     var paintMeta = function (mode) {
       var meta = document.querySelector('meta[name="theme-color"]:not([media])');
@@ -44,12 +44,6 @@
         sync();
       });
     });
-    // Follow the system only while the visitor has not chosen for themselves.
-    if (systemDark.addEventListener) {
-      systemDark.addEventListener('change', function () {
-        if (!root.getAttribute('data-theme')) sync();
-      });
-    }
     sync();
   })();
 

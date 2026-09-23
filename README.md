@@ -51,9 +51,14 @@ text, so anything that must be read uses `--accent-ink` instead.
   from 360px to 1440px+ with no breakpoint jumps.
 - **Layout:** intrinsic CSS Grid (`auto-fit` + `minmax`), so sections reflow
   instead of relying on device-specific media queries.
-- **Dark mode:** follows `prefers-color-scheme` by default; the header toggle
-  overrides it and the choice persists in `localStorage`. A tiny inline script in
-  `<head>` applies the stored theme before first paint, so there is no flash.
+- **Dark mode:** **light is the default for every visitor**, including those whose
+  operating system is set to dark — the OS preference is deliberately not
+  followed. Dark applies only once someone chooses it with the header toggle, and
+  that choice then persists in `localStorage`. A tiny inline script in `<head>`
+  applies the stored theme before first paint, so there is no flash.
+  To go back to following the OS, re-add a `@media (prefers-color-scheme: dark)`
+  block mirroring the `[data-theme="dark"]` tokens, and let `current()` in
+  `main.js` fall back to the media query.
 - **Texture:** one fixed SVG grain layer over the page (`body::after`), blend
   mode `multiply` in light and `screen` in dark.
 
@@ -91,7 +96,7 @@ Two details worth knowing before regenerating any of them:
 Progressive enhancement only — every page is fully readable and navigable with
 JavaScript disabled.
 
-- Theme toggle, with system-preference following and no flash of the wrong theme.
+- Theme toggle (light by default, dark on request), with no flash of the wrong theme.
 - Sticky navigation that gains a shadow on scroll (the contact bar scrolls away).
 - Divisions dropdown on desktop: hover, click and keyboard (Escape closes).
 - Mobile drawer with focus trapping, Escape to close and scroll lock.

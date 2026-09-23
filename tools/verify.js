@@ -18,7 +18,8 @@ const OUT = __dirname + '/shots';
   // ---- overflow + console errors on every page, both themes, two widths ----
   for (const scheme of ['light','dark']) {
     for (const [w,h] of [[1440,900],[390,844]]) {
-      const ctx = await browser.newContext({ viewport:{width:w,height:h}, colorScheme: scheme, deviceScaleFactor:1 });
+      const ctx = await browser.newContext({ viewport:{width:w,height:h}, deviceScaleFactor:1 });
+      await ctx.addInitScript(t => { try { localStorage.setItem('sx-theme', t); } catch (e) {} }, scheme);
       for (const name of pages) {
         const p = await ctx.newPage();
         p.on('console', m => { if (m.type()==='error') problems.push(`${name}/${scheme}/${w}: console ${m.text()}`); });
@@ -27,6 +28,8 @@ const OUT = __dirname + '/shots';
         p.on('request', r => { const u = r.url(); if (!u.startsWith('http://127.0.0.1:8765') && !u.startsWith('data:')) problems.push(`${name}: OFF-SITE request ${u}`); });
         await p.goto(ROOT + name + '.html', { waitUntil:'load' });
         await p.waitForTimeout(350);
+        const themeOn = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+        if (themeOn !== scheme) problems.push(`${name}/${scheme}/${w}: stored theme not applied (got ${themeOn})`);
         const o = await p.evaluate(() => {
           const de = document.documentElement, bad = [];
           document.querySelectorAll('body *').forEach(el => {
@@ -61,11 +64,21 @@ const OUT = __dirname + '/shots';
 
   // ---- theme toggle round-trip + persistence ----
   {
-    const ctx = await browser.newContext({ viewport:{width:1440,height:900}, colorScheme:'light' });
+    // A visitor with a DARK operating system and no stored choice must still
+    // get the light site — light is the default, the OS is not consulted.
+    const ctx = await browser.newContext({ viewport:{width:1440,height:900}, colorScheme:'dark' });
     const p = await ctx.newPage();
     await p.goto(ROOT + 'index.html');
     await p.waitForTimeout(300);
-    const before = await p.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    const fresh = await p.evaluate(() => ({
+      attr: document.documentElement.getAttribute('data-theme'),
+      bg: getComputedStyle(document.body).backgroundColor,
+      pressed: document.querySelector('[data-theme-toggle]').getAttribute('aria-pressed')
+    }));
+    if (fresh.attr) problems.push(`default run set data-theme=${fresh.attr}; expected none`);
+    if (fresh.bg !== 'rgb(255, 255, 255)') problems.push(`dark-OS visitor did not get the light site (body ${fresh.bg})`);
+    if (fresh.pressed !== 'false') problems.push(`toggle should read unpressed by default, got ${fresh.pressed}`);
+    const before = fresh.bg;
     await p.click('.nav-actions [data-theme-toggle]');
     await p.waitForTimeout(500);
     const after = await p.evaluate(() => ({
