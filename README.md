@@ -20,30 +20,43 @@ framework. Drop the folder on any web host and it works.
 | `travels.html` | Division 02 — services, deliverables, process, FAQs |
 | `education.html` | Division 03 — services, deliverables, process, FAQs |
 | `logistics.html` | Division 04 — services, deliverables, process, FAQs |
-| `contact.html` | Contact methods, validated enquiry form, FAQs |
+| `contact.html` | Contact methods, division-aware enquiry form, FAQs |
+| `privacy.html` | What the site and each division collect, who sees it, how to have it removed |
 | `404.html` | Not-found page |
 
 Supporting files: `assets/css/styles.css`, `assets/js/main.js`,
-`assets/img/` (logo assets — see below), `robots.txt`, `sitemap.xml`,
-`.nojekyll`.
+`assets/img/` (logo assets — see below), `assets/fonts/` (self-hosted webfonts
+and their OFL licences), `robots.txt`, `sitemap.xml`, `.nojekyll`.
 
 ## Design system
 
-Everything is driven by custom properties at the top of `assets/css/styles.css`,
-so the whole site can be re-themed from one block.
+Everything is driven by custom properties at the top of `assets/css/styles.css`.
+Both themes are defined there as token sets, so the whole site can be re-themed
+from one block.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| `--green-700` | `#0B5730` | Primary brand green (from the logo) |
-| `--orange-500` | `#F07C1A` | Brand accent (from the logo) |
-| `--green-900` | `#05301A` | Hero and footer grounds |
-| `--cream` / `--sand` | `#FBF9F5` / `#F4F0E8` | Alternating section backgrounds |
+| Token | Light | Dark | Use |
+| --- | --- | --- | --- |
+| `--brand-green` | `#0B5730` | same | Primary brand green (from the logo) |
+| `--brand-orange` | `#F07C1A` | same | Brand accent (from the logo) |
+| `--bg` | `#FFFFFF` | `#071A11` | Page ground |
+| `--text` | `#101A14` | `#EDF4EF` | Body text |
+| `--accent-ink` | `#AE5207` | `#FBB56B` | Orange that is legible as *text* on that ground |
 
-- **Type:** Playfair Display (headings) + Inter (body), loaded from Google Fonts
-  with system serif / sans fallbacks. Sizes use `clamp()` so they scale fluidly
-  from 360 px to 1440 px+ with no breakpoint jumps.
+Brand colours stay fixed across themes; everything else is semantic and flips.
+The split matters: `--brand-orange` is a fill colour and fails contrast as small
+text, so anything that must be read uses `--accent-ink` instead.
+
+- **Type:** Playfair Display (display) and Inter (body), both as variable fonts,
+  **self-hosted** — see Performance. Sizes use `clamp()` so they scale fluidly
+  from 360px to 1440px+ with no breakpoint jumps.
 - **Layout:** intrinsic CSS Grid (`auto-fit` + `minmax`), so sections reflow
   instead of relying on device-specific media queries.
+- **Dark mode:** follows `prefers-color-scheme` by default; the header toggle
+  overrides it and the choice persists in `localStorage`. A tiny inline script in
+  `<head>` applies the stored theme before first paint, so there is no flash.
+- **Texture:** one fixed SVG grain layer over the page (`body::after`), blend
+  mode `multiply` in light and `screen` in dark.
+
 ### Logo assets
 
 Every mark on the site is the supplied artwork; nothing is redrawn. Each file is
@@ -78,37 +91,84 @@ Two details worth knowing before regenerating any of them:
 Progressive enhancement only — every page is fully readable and navigable with
 JavaScript disabled.
 
+- Theme toggle, with system-preference following and no flash of the wrong theme.
 - Sticky navigation that gains a shadow on scroll (the contact bar scrolls away).
 - Divisions dropdown on desktop: hover, click and keyboard (Escape closes).
 - Mobile drawer with focus trapping, Escape to close and scroll lock.
 - Reveal-on-scroll and count-up figures via `IntersectionObserver`.
 - Accordion FAQs using native `<details>`.
-- Enquiry-form validation with inline, per-field messages and a honeypot field.
-- `prefers-reduced-motion` is respected throughout — all animation is disabled.
+- **Division-aware enquiry form:** choosing a division reveals the two or three
+  follow-up questions that division actually needs to quote. Hidden branches are
+  `disabled` as well as `hidden`, so they can never block validation, and the
+  generated email includes whatever was filled in.
+- `prefers-reduced-motion` is respected throughout, including view transitions.
 
 ## Accessibility
 
 - Skip link, single `<h1>` per page, landmark elements and labelled breadcrumbs.
 - All form fields have real `<label for>` pairs; errors are announced via
   `aria-live` and flagged with `aria-invalid`.
-- Icons are `aria-hidden`; icon-only controls carry `aria-label`.
+- Icons are `aria-hidden`; icon-only controls carry `aria-label`. The theme
+  toggle exposes `aria-pressed` and relabels itself.
 - Visible focus rings (`:focus-visible`) on every interactive element.
-- Every colour pair in the design system was measured against WCAG 2.1 AA
-  (4.5:1 for text, 3:1 for icons and UI affordances) and passes on light, cream,
-  sand and dark grounds. The accent button is therefore deep green on brand
-  orange rather than white on orange, which fails at 2.8:1. The one exception is
-  the orange `x` in the wordmark, which falls under the logotype exemption.
-- Sections are only hidden for the scroll-reveal animation when JavaScript is
-  present (`.js .reveal`), so with scripting disabled the whole page renders.
+- **Contrast is measured, not assumed.** A script walks every rendered page in
+  both themes, computes each text node's effective background through any
+  translucent ancestors, and checks the ratio against WCAG AA (4.5:1 for body
+  text, 3:1 for large text). All 14 page renders pass with zero failures. Re-run
+  it after any colour change (`node tools/contrast-audit.js` — see
+  `tools/README.md`). It has caught four real regressions so far, including an
+  accent button whose label colour was being overridden inside the mobile
+  drawer.
+- Reveal animations are scoped to `.js`, so with scripting disabled the whole
+  page renders.
 
 ## SEO
 
 Per-page `<title>` and meta description, canonical URLs, Open Graph and Twitter
-cards, `sitemap.xml`, `robots.txt`, and JSON-LD structured data
-(`Organization` with both phone numbers and opening hours, `Service` per
-division, `FAQPage` on the division and contact pages).
+cards, `sitemap.xml`, `robots.txt`, and JSON-LD structured data: `Organization`
+with both phone numbers and opening hours, `Service` per division, `FAQPage` on
+the division and contact pages, and `BreadcrumbList` on every interior page.
 
 ---
+
+## Performance
+
+The site loads **no third-party resources at all** — no font CDN, no analytics,
+no tag manager. That is a deliberate choice for an audience largely on Liberian
+mobile data, where each extra DNS lookup and TLS handshake is expensive.
+
+Homepage, first visit, gzipped (as GitHub Pages serves it):
+
+| Asset | Transfer |
+| --- | --- |
+| HTML | ~9 KB |
+| CSS | ~10 KB |
+| JS | ~4 KB |
+| Logo mark (PNG) | 41 KB |
+| Fonts (3 woff2) | 123 KB |
+| **Total** | **~186 KB in 8 requests** |
+
+Repeat visits are around 22 KB, since fonts and images cache.
+
+Notes for anyone changing this:
+
+- The fonts are variable, latin-subset woff2 files under `assets/fonts/`, with
+  `unicode-range` set so the latin-ext files download only if a page actually
+  uses those characters. The two latin files are preloaded.
+- Playfair's italic file loads only on pages that use it (the homepage headline).
+- `symmetrix-mark.png` is 176px for a 50px mark — enough for a 3x display and no
+  more. Regenerating it larger is the easiest way to make the site slower.
+- Font licences: Inter and Playfair Display are both SIL Open Font License 1.1.
+  The licence texts ship alongside the font files, as the OFL requires. Keep them
+  there if you replace or move the fonts.
+
+## Checking your changes
+
+`tools/verify.js` and `tools/contrast-audit.js` re-run the checks behind the
+claims above — layout overflow, console errors, off-origin requests, the theme
+toggle, the enquiry form, and WCAG contrast in both themes. See
+[`tools/README.md`](tools/README.md). They are development-only; the site itself
+has no dependencies.
 
 ## Running it locally
 
@@ -195,7 +255,12 @@ real details.
    <form class="form" id="enquiry-form" method="post" action="https://your-endpoint">
    ```
    `main.js` detects the `action` attribute and steps out of the way.
-7. **Claims to verify** — the site states a one-business-day response target,
+7. **Photography.** The site is entirely type, brand geometry and colour — there
+   is not a single photograph on it. That was deliberate: no authentic images of
+   the company exist here, and stock or generated pictures of "our team" or "our
+   office" would misrepresent a real business. Commissioning real photography of
+   your people, premises and work is the single biggest visual upgrade left.
+8. **Claims to verify** — the site states a one-business-day response target,
    free initial consultations, and written quotations before work starts. These
    are commitments; confirm the business can meet them, or edit the wording.
    No client names, testimonials or performance statistics have been invented.

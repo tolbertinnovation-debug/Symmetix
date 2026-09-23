@@ -5,15 +5,61 @@
 (function () {
   'use strict';
 
+  var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Sticky header shadow ---------- */
+  /* ---------- Colour theme ---------- */
+  (function theme() {
+    var buttons = document.querySelectorAll('[data-theme-toggle]');
+    if (!buttons.length) return;
+    var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    var current = function () {
+      var set = root.getAttribute('data-theme');
+      return set || (systemDark.matches ? 'dark' : 'light');
+    };
+    var paintMeta = function (mode) {
+      var meta = document.querySelector('meta[name="theme-color"]:not([media])');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'theme-color');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', mode === 'dark' ? '#071A11' : '#FBF9F5');
+    };
+    var sync = function () {
+      var mode = current();
+      Array.prototype.forEach.call(buttons, function (b) {
+        b.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+        b.setAttribute('aria-label', mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      });
+      paintMeta(mode);
+    };
+
+    Array.prototype.forEach.call(buttons, function (b) {
+      b.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('sx-theme', next); } catch (e) {}
+        sync();
+      });
+    });
+    // Follow the system only while the visitor has not chosen for themselves.
+    if (systemDark.addEventListener) {
+      systemDark.addEventListener('change', function () {
+        if (!root.getAttribute('data-theme')) sync();
+      });
+    }
+    sync();
+  })();
+
+  /* ---------- Sticky header + back to top ---------- */
   var header = document.querySelector('.site-header');
-  if (header) {
+  var toTop = document.querySelector('.fab--top');
+  if (header || toTop) {
     var onScroll = function () {
-      header.classList.toggle('is-stuck', window.scrollY > 8);
-      var top = document.querySelector('.fab--top');
-      if (top) top.classList.toggle('is-visible', window.scrollY > 600);
+      if (header) header.classList.toggle('is-stuck', window.scrollY > 8);
+      if (toTop) toTop.classList.toggle('is-visible', window.scrollY > 700);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -28,7 +74,7 @@
       if (trigger) trigger.setAttribute('aria-expanded', state ? 'true' : 'false');
     };
     item.addEventListener('mouseenter', function () { window.clearTimeout(closeTimer); open(true); });
-    item.addEventListener('mouseleave', function () { closeTimer = window.setTimeout(function () { open(false); }, 140); });
+    item.addEventListener('mouseleave', function () { closeTimer = window.setTimeout(function () { open(false); }, 150); });
     if (trigger) {
       trigger.addEventListener('click', function (event) {
         event.preventDefault();
@@ -45,13 +91,13 @@
 
   /* ---------- Mobile drawer ---------- */
   var drawer = document.getElementById('drawer');
-  var toggle = document.querySelector('.nav-toggle');
-  if (drawer && toggle) {
+  var navToggle = document.querySelector('.nav-toggle');
+  if (drawer && navToggle) {
     var lastFocus = null;
     var setDrawer = function (state) {
       drawer.classList.toggle('is-open', state);
       drawer.setAttribute('aria-hidden', state ? 'false' : 'true');
-      toggle.setAttribute('aria-expanded', state ? 'true' : 'false');
+      navToggle.setAttribute('aria-expanded', state ? 'true' : 'false');
       document.body.classList.toggle('no-scroll', state);
       if (state) {
         lastFocus = document.activeElement;
@@ -61,7 +107,7 @@
         lastFocus.focus();
       }
     };
-    toggle.addEventListener('click', function () { setDrawer(!drawer.classList.contains('is-open')); });
+    navToggle.addEventListener('click', function () { setDrawer(!drawer.classList.contains('is-open')); });
     drawer.addEventListener('click', function (event) {
       if (event.target.closest('.drawer-scrim') || event.target.closest('.drawer-close') || event.target.closest('a')) {
         setDrawer(false);
@@ -70,13 +116,11 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && drawer.classList.contains('is-open')) setDrawer(false);
     });
-    // Keep focus inside the open drawer.
     drawer.addEventListener('keydown', function (event) {
       if (event.key !== 'Tab') return;
       var nodes = drawer.querySelectorAll('a[href], button:not([disabled])');
       if (!nodes.length) return;
-      var first = nodes[0];
-      var last = nodes[nodes.length - 1];
+      var first = nodes[0], last = nodes[nodes.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
@@ -90,32 +134,27 @@
     } else {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-in');
-            io.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) { entry.target.classList.add('is-in'); io.unobserve(entry.target); }
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       Array.prototype.forEach.call(revealables, function (el) { io.observe(el); });
     }
   }
 
-  /* ---------- Count-up stats ---------- */
+  /* ---------- Count-up figures ---------- */
   var counters = document.querySelectorAll('[data-count]');
   if (counters.length) {
+    var pad = function (el, v) { return el.getAttribute('data-pad') === 'true' && v < 10 ? '0' + v : String(v); };
     var run = function (el) {
       var target = parseFloat(el.getAttribute('data-count'));
       if (isNaN(target)) return;
       // Counting up from zero looks broken for small figures — leave those be.
-      if (reduceMotion || target < 5) { el.textContent = el.getAttribute('data-pad') === 'true' && target < 10 ? '0' + target : String(target); return; }
+      if (reduceMotion || target < 5) { el.textContent = pad(el, target); return; }
       var start = null;
-      var pad = el.getAttribute('data-pad') === 'true';
       var step = function (now) {
         if (start === null) start = now;
         var p = Math.min((now - start) / 1300, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        var value = Math.round(target * eased);
-        el.textContent = pad && value < 10 ? '0' + value : String(value);
+        el.textContent = pad(el, Math.round(target * (1 - Math.pow(1 - p, 3))));
         if (p < 1) window.requestAnimationFrame(step);
       };
       window.requestAnimationFrame(step);
@@ -137,11 +176,35 @@
     el.textContent = String(new Date().getFullYear());
   });
 
-  /* ---------- Contact form ---------- */
+  /* ---------- Enquiry form ---------- */
   var form = document.getElementById('enquiry-form');
   if (form) {
     var status = form.querySelector('.form-status');
-    var fields = form.querySelectorAll('[data-validate]');
+    var divisionSelect = form.elements.division;
+    var branches = form.querySelectorAll('[data-branch]');
+
+    /* Show only the follow-up questions that belong to the chosen division, and
+       take hidden fields out of validation so they can never block a submit. */
+    var syncBranches = function () {
+      var chosen = divisionSelect ? divisionSelect.value : '';
+      Array.prototype.forEach.call(branches, function (branch) {
+        var match = branch.getAttribute('data-branch') === chosen;
+        branch.hidden = !match;
+        Array.prototype.forEach.call(branch.querySelectorAll('input, select, textarea'), function (f) {
+          f.disabled = !match;
+        });
+      });
+    };
+    if (divisionSelect) {
+      divisionSelect.addEventListener('change', syncBranches);
+      syncBranches();
+    }
+
+    var liveFields = function () {
+      return Array.prototype.filter.call(form.querySelectorAll('[data-validate]'), function (f) {
+        return !f.disabled && f.offsetParent !== null;
+      });
+    };
 
     var messageFor = function (input) {
       if (!input.value.trim()) return 'This field is required.';
@@ -167,30 +230,29 @@
       return !msg;
     };
 
-    Array.prototype.forEach.call(fields, function (input) {
-      input.addEventListener('blur', function () { validate(input); });
+    Array.prototype.forEach.call(form.querySelectorAll('[data-validate]'), function (input) {
+      input.addEventListener('blur', function () { if (!input.disabled) validate(input); });
       input.addEventListener('input', function () {
         var wrap = input.closest('.field');
         if (wrap && wrap.classList.contains('has-error')) validate(input);
       });
     });
 
-    var summarise = function (data) {
-      return [
-        'Name: ' + data.name,
-        'Email: ' + data.email,
-        'Phone: ' + data.phone,
-        'Division: ' + data.division,
-        '',
-        data.message
-      ].join('\n');
+    var summarise = function () {
+      var lines = [];
+      Array.prototype.forEach.call(form.querySelectorAll('input, select, textarea'), function (f) {
+        if (f.disabled || !f.name || f.name === 'company-website' || !f.value.trim()) return;
+        var label = form.querySelector('label[for="' + f.id + '"]');
+        var name = label ? label.textContent.replace('*', '').trim() : f.name;
+        lines.push(name + ': ' + f.value.trim());
+      });
+      return lines.join('\n');
     };
 
     form.addEventListener('submit', function (event) {
       var ok = true;
-      Array.prototype.forEach.call(fields, function (input) { if (!validate(input)) ok = false; });
+      liveFields().forEach(function (input) { if (!validate(input)) ok = false; });
 
-      // Honeypot: silently drop obvious bots.
       var trap = form.querySelector('input[name="company-website"]');
       if (trap && trap.value) { event.preventDefault(); return; }
 
@@ -206,27 +268,22 @@
         return;
       }
 
-      // No form endpoint configured yet: hand the enquiry to the visitor's
-      // mail client so no message is lost. Replace the form `action` with a
-      // real endpoint (see README) to post server-side instead.
+      // No form endpoint configured yet: hand the enquiry to the visitor's mail
+      // client so nothing is lost. Setting the form's `action` to a real
+      // endpoint makes this branch step aside — see the README.
       if (!form.getAttribute('action')) {
         event.preventDefault();
-        var data = {
-          name: (form.elements.name.value || '').trim(),
-          email: (form.elements.email.value || '').trim(),
-          phone: (form.elements.phone.value || '').trim(),
-          division: form.elements.division.value || 'General enquiry',
-          message: (form.elements.message.value || '').trim()
-        };
-        var subject = 'Website enquiry — ' + data.division;
-        var href = 'mailto:' + (form.getAttribute('data-mailto') || 'info@symmetrixholdings.com') +
-          '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(summarise(data));
+        var division = (divisionSelect && divisionSelect.value) || 'General enquiry';
+        var name = (form.elements.name.value || '').trim();
+        var href = 'mailto:' + (form.getAttribute('data-mailto') || '') +
+          '?subject=' + encodeURIComponent('Website enquiry — ' + division) +
+          '&body=' + encodeURIComponent(summarise());
         window.location.href = href;
         if (status) {
           status.hidden = false;
           status.setAttribute('data-state', 'ok');
-          status.textContent = 'Thank you, ' + data.name.split(' ')[0] + '. Your email app is opening with this enquiry ready to send — or call us on (+231) 0880832316.';
+          status.textContent = 'Thank you, ' + (name.split(' ')[0] || 'and welcome') +
+            '. Your email app is opening with this enquiry ready to send — or call us on (+231) 0880832316.';
         }
       }
     });

@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Symmetrix Management Holdings LLC | Accountancy, Travels, Education & Logistics in Liberia</title>
 <meta name="description" content="Symmetrix Management Holdings LLC is a Liberian holding company delivering accountancy, travel, education and logistics management services under one accountable partner. Call (+231) 0880832316.">
-<meta name="theme-color" content="#0B5730">
+<meta name="theme-color" content="#FBF9F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#071A11" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://tolbertinnovation-debug.github.io/Symmetix/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Symmetrix Management Holdings LLC">
@@ -20,11 +22,19 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-latin.woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/styles.css">
-<script>document.documentElement.classList.add("js");</script>
+<script>
+(function () {
+  var r = document.documentElement;
+  r.classList.add("js");
+  try {
+    var t = localStorage.getItem("sx-theme");
+    if (t === "light" || t === "dark") r.setAttribute("data-theme", t);
+  } catch (e) {}
+})();
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -72,7 +82,7 @@
 <header class="site-header">
   <div class="wrap">
     <nav class="nav" aria-label="Primary">
-      <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="256" height="256" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
+      <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="176" height="176" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
       <ul class="nav-main" role="list"><li><a class="nav-link is-active" href="index.html">Home</a></li><li><a class="nav-link" href="about.html">About</a></li><li class="has-dropdown"><a class="nav-link" href="divisions.html" aria-expanded="false">Divisions <svg class="caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></a><ul class="dropdown" role="list"><li><a class="dropdown-item" href="accountancy.html"><span class="ico ico--green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M8.5 7h7v3h-7z"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span><span><strong>Accountancy</strong><span>Audit-ready books, tax filings and financial reporting that stand up to scrutiny.</span></span></a></li><li><a class="dropdown-item" href="travels.html"><span class="ico ico--orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 1 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.9 4.3-2.2 2.2H3.5l-.7 1.4 3.4.9.9 3.4 1.4-.7v-2.5l2.2-2.2 4.3 3.9a.5.5 0 0 0 .8-.5Z"/></svg></span><span><strong>Travels</strong><span>Ticketing, visa documentation and corporate travel managed end to end.</span></span></a></li><li><a class="dropdown-item" href="education.html"><span class="ico ico--orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.4 8.6 12 4.2 2.6 8.6 12 13l9.4-4.4Z"/><path d="M6 10.5v4.9c0 1.8 2.7 3.2 6 3.2s6-1.4 6-3.2v-4.9"/><path d="M20 10v5.5"/></svg></span><span><strong>Education</strong><span>Study placement, admissions support and professional training pathways.</span></span></a></li><li><a class="dropdown-item" href="logistics.html"><span class="ico ico--green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7.5A1.5 1.5 0 0 1 3.5 6h9A1.5 1.5 0 0 1 14 7.5V16H2V7.5Z"/><path d="M14 10h3.6c.5 0 1 .2 1.2.6l2 3c.1.3.2.6.2.9V16h-7v-6Z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h7"/></svg></span><span><strong>Logistics Management</strong><span>Freight forwarding, customs clearance and last-mile delivery you can track.</span></span></a></li></ul></li><li><a class="nav-link" href="contact.html">Contact</a></li></ul>
       <div class="nav-actions">
         <a class="nav-phone" href="tel:+231880832316">
@@ -80,7 +90,9 @@
           <span><em>Talk to us</em><strong>(+231) 0880832316</strong></span>
         </a>
         <a class="btn btn--accent btn--sm" href="contact.html">Request a consultation</a>
+        <button class="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false" data-theme-toggle><svg class="i-sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg><svg class="i-moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a6.8 6.8 0 0 0 10.8 10.8Z"/></svg></button>
       </div>
+      <span class="theme-toggle-mobile"><button class="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false" data-theme-toggle><svg class="i-sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg><svg class="i-moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a6.8 6.8 0 0 0 10.8 10.8Z"/></svg></button></span>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
         <i></i><i></i><i></i>
       </button>
@@ -91,7 +103,7 @@
   <div class="drawer-scrim"></div>
   <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Site menu">
     <div class="drawer-top">
-      <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="256" height="256" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
+      <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="176" height="176" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
       <button class="drawer-close" type="button" aria-label="Close menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <nav class="drawer-nav" aria-label="Mobile">
@@ -114,8 +126,18 @@
 <main id="main">
 
 <section class="hero">
+  <div class="hero-glyph" aria-hidden="true">
+  <svg viewBox="0 0 600 600" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.4">
+    <circle cx="300" cy="300" r="272"/>
+    <circle cx="300" cy="300" r="208" stroke="rgba(255,255,255,.12)"/>
+    <ellipse cx="300" cy="300" rx="128" ry="272" stroke="rgba(255,255,255,.1)"/>
+    <ellipse cx="300" cy="300" rx="228" ry="272" stroke="rgba(255,255,255,.07)"/>
+    <path d="M40 220h520M40 300h520M40 380h520" stroke="rgba(255,255,255,.08)"/>
+    <path d="M300 28a272 272 0 0 1 192 80" stroke="rgba(240,124,26,.38)" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+</div>
   <div class="wrap hero-inner">
-    <div>
+    <div class="hero-lead">
       <p class="eyebrow is-light">Symmetrix Management Holdings LLC</p>
       <h1>Four disciplines.<br>One <span class="accent">accountable</span> partner.</h1>
       <p class="lede">Accountancy, travel, education and logistics &mdash; delivered by a single Liberian holding company with one standard of service, one point of contact and one invoice you can actually reconcile.</p>
@@ -123,95 +145,49 @@
         <a class="btn btn--accent" href="contact.html">Request a consultation <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
         <a class="btn btn--outline-light" href="divisions.html">Explore our divisions</a>
       </div>
-      <dl class="hero-meta">
+      <dl class="hero-facts">
         <div>
           <dt>Speak to a person</dt>
-          <dd><a href="tel:+231880832316" style="color:#fff">(+231) 0880832316</a><small>Also on (+231) 0776938033</small></dd>
+          <dd><a href="tel:+231880832316">(+231) 0880832316</a><small>Also on (+231) 0776938033</small></dd>
         </div>
         <div>
           <dt>Based in</dt>
           <dd>Monrovia<small>Serving clients across Liberia</small></dd>
         </div>
         <div>
-          <dt>Structure</dt>
-          <dd>4 divisions<small>One contract, one account manager</small></dd>
+          <dt>Written reply</dt>
+          <dd>1 business day<small>Every enquiry, every division</small></dd>
         </div>
       </dl>
     </div>
-    <div class="orbit" aria-hidden="true">
-      <span class="orbit-ring"></span>
-      <span class="orbit-ring"></span>
-      <span class="orbit-ring"></span>
-      <span class="orbit-core"><img src="assets/img/symmetrix-emblem.jpg" alt="" width="640" height="640" loading="eager" fetchpriority="high"></span>
-      <span class="orbit-node n-1"><span class="ico ico--green-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M8.5 7h7v3h-7z"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>Accountancy</span>
-      <span class="orbit-node n-2"><span class="ico ico--orange-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 1 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.9 4.3-2.2 2.2H3.5l-.7 1.4 3.4.9.9 3.4 1.4-.7v-2.5l2.2-2.2 4.3 3.9a.5.5 0 0 0 .8-.5Z"/></svg></span>Travels</span>
-      <span class="orbit-node n-3"><span class="ico ico--orange-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.4 8.6 12 4.2 2.6 8.6 12 13l9.4-4.4Z"/><path d="M6 10.5v4.9c0 1.8 2.7 3.2 6 3.2s6-1.4 6-3.2v-4.9"/><path d="M20 10v5.5"/></svg></span>Education</span>
-      <span class="orbit-node n-4"><span class="ico ico--green-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7.5A1.5 1.5 0 0 1 3.5 6h9A1.5 1.5 0 0 1 14 7.5V16H2V7.5Z"/><path d="M14 10h3.6c.5 0 1 .2 1.2.6l2 3c.1.3.2.6.2.9V16h-7v-6Z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h7"/></svg></span>Logistics</span>
-    </div>
-  </div>
-</section>
 
-<section class="section" id="divisions">
-  <div class="wrap">
-    <div class="section-head is-center reveal">
-      <p class="eyebrow">What we do</p>
-      <h2>Specialist divisions, held to a shared standard</h2>
-      <p class="lede">Each division runs with its own specialists and its own discipline. What they share is our governance: documented processes, written quotations and a named person answerable for your file.</p>
-    </div>
-    <div class="grid grid-4">
-      <article class="card card--hover division-card reveal">
-        <span class="num" aria-hidden="true">01</span>
-        <span class="ico ico--green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M8.5 7h7v3h-7z"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
-        <h3>Accountancy</h3>
-        <p>Books that balance, filings that land on time and financial statements that withstand an auditor&rsquo;s questions.</p>
-        <ul role="list">
-          <li>Bookkeeping &amp; management accounts</li>
-          <li>Tax registration &amp; filing support</li>
-          <li>Payroll administration</li>
-          <li>Audit preparation</li>
-        </ul>
-        <a class="link-arrow" href="accountancy.html">Explore accountancy <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-      </article>
-      <article class="card card--hover division-card reveal" data-delay="1">
-        <span class="num" aria-hidden="true">02</span>
-        <span class="ico ico--orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 1 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.9 4.3-2.2 2.2H3.5l-.7 1.4 3.4.9.9 3.4 1.4-.7v-2.5l2.2-2.2 4.3 3.9a.5.5 0 0 0 .8-.5Z"/></svg></span>
-        <h3>Travels</h3>
-        <p>Flights, visa documentation and itineraries handled by people who answer the phone when a plan changes.</p>
-        <ul role="list">
-          <li>Air ticketing &amp; reissues</li>
-          <li>Visa &amp; document guidance</li>
-          <li>Hotel &amp; airport transfers</li>
-          <li>Corporate travel policy</li>
-        </ul>
-        <a class="link-arrow" href="travels.html">Explore travels <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-      </article>
-      <article class="card card--hover division-card reveal" data-delay="2">
-        <span class="num" aria-hidden="true">03</span>
-        <span class="ico ico--orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.4 8.6 12 4.2 2.6 8.6 12 13l9.4-4.4Z"/><path d="M6 10.5v4.9c0 1.8 2.7 3.2 6 3.2s6-1.4 6-3.2v-4.9"/><path d="M20 10v5.5"/></svg></span>
-        <h3>Education</h3>
-        <p>Honest guidance on courses, countries and costs &mdash; then practical help getting the application accepted.</p>
-        <ul role="list">
-          <li>Study placement &amp; admissions</li>
-          <li>Application &amp; document review</li>
-          <li>Scholarship research</li>
-          <li>Professional short courses</li>
-        </ul>
-        <a class="link-arrow" href="education.html">Explore education <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-      </article>
-      <article class="card card--hover division-card reveal" data-delay="3">
-        <span class="num" aria-hidden="true">04</span>
-        <span class="ico ico--green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7.5A1.5 1.5 0 0 1 3.5 6h9A1.5 1.5 0 0 1 14 7.5V16H2V7.5Z"/><path d="M14 10h3.6c.5 0 1 .2 1.2.6l2 3c.1.3.2.6.2.9V16h-7v-6Z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h7"/></svg></span>
-        <h3>Logistics Management</h3>
-        <p>Freight moved, duties cleared and goods delivered &mdash; with paperwork that survives inspection.</p>
-        <ul role="list">
-          <li>Air &amp; sea freight forwarding</li>
-          <li>Customs clearance &amp; duties</li>
-          <li>Warehousing &amp; distribution</li>
-          <li>Last-mile delivery</li>
-        </ul>
-        <a class="link-arrow" href="logistics.html">Explore logistics <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-      </article>
-    </div>
+    <nav class="hero-index" aria-label="Our divisions">
+      <p class="hero-index-label">Our divisions <span>04</span></p>
+      <a class="dx" href="accountancy.html">
+        <span class="dx-num">01</span>
+        <span class="dx-name">Accountancy</span>
+        <span class="dx-go"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        <span class="dx-note">Bookkeeping, payroll, tax filing &amp; audit-ready statements</span>
+      </a>
+      <a class="dx" href="travels.html">
+        <span class="dx-num">02</span>
+        <span class="dx-name">Travels</span>
+        <span class="dx-go"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        <span class="dx-note">Ticketing, visas, accommodation &amp; corporate travel</span>
+      </a>
+      <a class="dx" href="education.html">
+        <span class="dx-num">03</span>
+        <span class="dx-name">Education</span>
+        <span class="dx-go"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        <span class="dx-note">Study placement, admissions &amp; professional training</span>
+      </a>
+      <a class="dx" href="logistics.html">
+        <span class="dx-num">04</span>
+        <span class="dx-name">Logistics Management</span>
+        <span class="dx-go"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        <span class="dx-note">Freight, customs clearance, warehousing &amp; delivery</span>
+      </a>
+    </nav>
   </div>
 </section>
 
@@ -260,6 +236,112 @@
         <figcaption>The Symmetrix operating principle</figcaption>
       </figure>
     </div>
+  </div>
+</section>
+
+<section class="section" id="divisions">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">What we do</p>
+      <h2>Specialist divisions, held to a shared standard</h2>
+      <p class="lede">Each division runs with its own specialists and its own discipline. What they share is our governance: documented processes, written quotations and a named person answerable for your file.</p>
+    </div>
+
+    <article class="dvrow reveal">
+      <div class="dvrow-head">
+        <span class="dvrow-num">01</span>
+        <span class="ico ico--green-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M8.5 7h7v3h-7z"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
+      </div>
+      <div class="dvrow-body">
+        <p class="dvrow-kicker">Accountancy &amp; advisory</p>
+        <h3>Books that balance, filings that land on time</h3>
+        <p>Bookkeeping, payroll, tax filing support and audit-ready financial statements &mdash; with the numbers explained, not just produced. We work with businesses that have no internal accountant, and alongside finance teams that need help at year end.</p>
+        <div class="btn-row">
+          <a class="link-arrow" href="accountancy.html">Explore accountancy <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="dvrow-side">
+        <p class="dvrow-side-label">Typically covers</p>
+        <ul class="dvrow-list" role="list">
+          <li>Monthly management accounts</li>
+          <li>Tax registration &amp; returns</li>
+          <li>Payroll administration</li>
+          <li>Audit preparation</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="dvrow reveal">
+      <div class="dvrow-head">
+        <span class="dvrow-num">02</span>
+        <span class="ico ico--orange-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 1 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.9 4.3-2.2 2.2H3.5l-.7 1.4 3.4.9.9 3.4 1.4-.7v-2.5l2.2-2.2 4.3 3.9a.5.5 0 0 0 .8-.5Z"/></svg></span>
+      </div>
+      <div class="dvrow-body">
+        <p class="dvrow-kicker">Travel &amp; ticketing</p>
+        <h3>Travel arranged properly &mdash; and fixed when plans change</h3>
+        <p>Anyone can quote a fare. The value shows at 11pm when a connection is cancelled or a passenger is told a document is missing. We book carefully, explain fare rules before you pay, and stay reachable afterwards.</p>
+        <div class="btn-row">
+          <a class="link-arrow" href="travels.html">Explore travels <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="dvrow-side">
+        <p class="dvrow-side-label">Typically covers</p>
+        <ul class="dvrow-list" role="list">
+          <li>Air ticketing, reissues &amp; refunds</li>
+          <li>Visa &amp; travel documentation</li>
+          <li>Hotels &amp; airport transfers</li>
+          <li>Corporate travel management</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="dvrow reveal">
+      <div class="dvrow-head">
+        <span class="dvrow-num">03</span>
+        <span class="ico ico--orange-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.4 8.6 12 4.2 2.6 8.6 12 13l9.4-4.4Z"/><path d="M6 10.5v4.9c0 1.8 2.7 3.2 6 3.2s6-1.4 6-3.2v-4.9"/><path d="M20 10v5.5"/></svg></span>
+      </div>
+      <div class="dvrow-body">
+        <p class="dvrow-kicker">Education &amp; training</p>
+        <h3>Honest advice first, then a strong application</h3>
+        <p>Choosing where to study is one of the largest financial decisions a family makes. We counsel on realistic options across countries and budgets, say plainly when a plan is unlikely to be admitted, then do the document work properly.</p>
+        <div class="btn-row">
+          <a class="link-arrow" href="education.html">Explore education <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="dvrow-side">
+        <p class="dvrow-side-label">Typically covers</p>
+        <ul class="dvrow-list" role="list">
+          <li>Course &amp; country counselling</li>
+          <li>Applications &amp; admissions</li>
+          <li>Scholarship research</li>
+          <li>Professional short courses</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="dvrow reveal">
+      <div class="dvrow-head">
+        <span class="dvrow-num">04</span>
+        <span class="ico ico--green-soft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7.5A1.5 1.5 0 0 1 3.5 6h9A1.5 1.5 0 0 1 14 7.5V16H2V7.5Z"/><path d="M14 10h3.6c.5 0 1 .2 1.2.6l2 3c.1.3.2.6.2.9V16h-7v-6Z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h7"/></svg></span>
+      </div>
+      <div class="dvrow-body">
+        <p class="dvrow-kicker">Freight &amp; logistics</p>
+        <h3>Cargo moved, cleared and delivered &mdash; with the paperwork right</h3>
+        <p>Cargo rarely sits at a port because a ship was slow. It sits because an invoice value does not match the packing list, or a declaration was filed against the wrong tariff heading. We treat documentation as the core of the job.</p>
+        <div class="btn-row">
+          <a class="link-arrow" href="logistics.html">Explore logistics <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="dvrow-side">
+        <p class="dvrow-side-label">Typically covers</p>
+        <ul class="dvrow-list" role="list">
+          <li>Air &amp; sea freight forwarding</li>
+          <li>Customs clearance &amp; duties</li>
+          <li>Warehousing &amp; distribution</li>
+          <li>Last-mile delivery</li>
+        </ul>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -349,7 +431,7 @@
   <div class="wrap">
     <div class="footer-main">
       <div class="footer-brand">
-        <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="256" height="256" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
+        <a class="brand" href="index.html" aria-label="Symmetrix Management Holdings LLC — home"><img class="brand-mark" src="assets/img/symmetrix-mark.png" alt="" width="176" height="176" loading="eager" decoding="async"><span class="brand-text"><span class="brand-name">Symmetri<b>x</b></span><span class="brand-sub">Management Holdings LLC</span></span></a>
         <p>A Liberian-registered holding company delivering accountancy, travel, education and logistics services under one accountable standard of care.</p>
         <div class="socials">
           <a href="https://wa.me/231880832316" aria-label="Chat with us on WhatsApp" rel="noopener" target="_blank"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path fill="currentColor" stroke="none" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.42 1.3-1.96 1.35-.5.05-1.13.08-3.24-.79-2.5-1.03-4.06-3.66-4.18-3.83-.12-.17-.99-1.35-.99-2.57 0-1.22.64-1.82.87-2.07.23-.25.5-.31.67-.31.17 0 .34 0 .49.01.16.01.37-.06.58.44.21.5.72 1.77.78 1.9.06.13.1.28.01.45-.09.17-.14.28-.28.43-.14.15-.29.34-.42.45-.14.13-.29.27-.12.53.17.26.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.14.46.12.63-.07.17-.19.73-.85.93-1.14.2-.29.39-.24.66-.14.27.1 1.7.8 1.99.95.29.14.48.22.55.34.07.12.07.71-.17 1.39Z"/></svg></a>
@@ -369,6 +451,7 @@
           <li><a href="about.html#values">Our standards</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="contact.html#faq">Frequently asked</a></li>
+          <li><a href="privacy.html">Privacy notice</a></li>
         </ul>
       </div>
       <div>
@@ -387,6 +470,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="divisions.html">Divisions</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
       </ul>
     </div>
   </div>
