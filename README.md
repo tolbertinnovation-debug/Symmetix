@@ -191,12 +191,16 @@ has no dependencies.
 
 ## Running it locally
 
-No tooling required — open `index.html` in a browser, or serve the folder:
+Serve the folder with the bundled server, which resolves clean URLs the way
+GitHub Pages does:
 
 ```bash
-python3 -m http.server 8000
-# then visit http://localhost:8000
+python3 tools/serve.py
+# then visit http://127.0.0.1:8765
 ```
+
+Plain `python3 -m http.server` or opening files directly will not work for
+navigation, because links are clean URLs (below).
 
 ## Deploying
 
@@ -210,7 +214,18 @@ Pages is configured as **Settings → Pages → Deploy from a branch → `main` 
 workflow file and no build step. `.nojekyll` is what stops Jekyll from ignoring
 `assets/`.
 
-All internal links are relative, so serving from a sub-path needs no changes.
+### Clean URLs
+
+Pages are addressed without `.html`: `/about`, `/accountancy`, `/contact#faq`.
+GitHub Pages serves `about.html` at `/about` automatically, so the files keep
+their names; only the links, canonical tags, JSON-LD and `sitemap.xml` changed.
+Old `.html` addresses still load (the files exist), and their canonical tag
+points search engines at the clean URL.
+
+Internal links are root-relative (`/about`), so the site must be served from a
+domain root. Asset paths stay relative, except on `404.html`, which uses
+`/assets/...` because GitHub Pages serves it at whatever broken path was
+requested.
 
 ### Other hosts
 
