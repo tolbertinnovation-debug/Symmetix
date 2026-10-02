@@ -21,6 +21,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" as="image" type="image/webp" href="assets/img/hero-skyline.webp" imagesrcset="assets/img/hero-skyline-900.webp 900w, assets/img/hero-skyline.webp 1672w" imagesizes="100vw">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-latin.woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/styles.css">
@@ -125,16 +126,10 @@
 <main id="main">
 
 <section class="hero">
-  <div class="hero-glyph" aria-hidden="true">
-  <svg viewBox="0 0 600 600" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.4">
-    <circle cx="300" cy="300" r="272"/>
-    <circle cx="300" cy="300" r="208" stroke="rgba(255,255,255,.12)"/>
-    <ellipse cx="300" cy="300" rx="128" ry="272" stroke="rgba(255,255,255,.1)"/>
-    <ellipse cx="300" cy="300" rx="228" ry="272" stroke="rgba(255,255,255,.07)"/>
-    <path d="M40 220h520M40 300h520M40 380h520" stroke="rgba(255,255,255,.08)"/>
-    <path d="M300 28a272 272 0 0 1 192 80" stroke="rgba(240,124,26,.38)" stroke-width="4" stroke-linecap="round"/>
-  </svg>
-</div>
+  <picture class="hero-media" aria-hidden="true">
+    <source type="image/webp" srcset="assets/img/hero-skyline-900.webp 900w, assets/img/hero-skyline.webp 1672w" sizes="100vw">
+    <img src="assets/img/hero-skyline.jpg" srcset="assets/img/hero-skyline-900.jpg 900w, assets/img/hero-skyline.jpg 1672w" sizes="100vw" alt="" width="1672" height="941" fetchpriority="high" decoding="async">
+  </picture>
   <div class="wrap hero-inner">
     <div class="hero-lead">
       <p class="eyebrow is-light">Symmetrix Management Holdings LLC</p>
