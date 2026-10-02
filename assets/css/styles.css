@@ -93,6 +93,7 @@
   --link: #0B5730;
   --halo: rgba(6, 40, 22, .09);
   --grain: .05;
+  --grid-line: rgba(11, 87, 48, .055);
   --hero-from: #063A20;
   --hero-via: #052E19;
   --hero-to: #04250F;
@@ -150,6 +151,7 @@
   --link: #79D3A2;
   --halo: rgba(0, 0, 0, .5);
   --grain: .08;
+  --grid-line: rgba(255, 255, 255, .035);
   --hero-from: #06301B;
   --hero-via: #041F13;
   --hero-to: #03170D;
@@ -240,8 +242,27 @@ strong, b { font-weight: 650; color: var(--text); }
 .section { padding-block: var(--section-y); position: relative; }
 .section--tight { padding-block: clamp(2.5rem, 5vw, 4.25rem); }
 .section--alt { background: var(--bg-alt); }
+/* Architectural grid, fading out from the top corner — quiet structure, never pattern-for-pattern */
+.section--alt::before, .section--sand::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(120% 80% at 100% 0%, #000 0%, transparent 62%);
+  -webkit-mask-image: radial-gradient(120% 80% at 100% 0%, #000 0%, transparent 62%);
+}
 .section--sand { background: var(--bg-sand); }
-.section--dark { background: var(--bg-inverse); color: var(--text-on-inverse); }
+.section--sand::before { mask-image: radial-gradient(120% 80% at 0% 100%, #000 0%, transparent 62%); -webkit-mask-image: radial-gradient(120% 80% at 0% 100%, #000 0%, transparent 62%); }
+/* Dark sections: the skyline at night, barely there, so they read as part of the same city */
+.section--dark { background: var(--bg-inverse); color: var(--text-on-inverse); isolation: isolate; overflow: hidden; }
+.section--dark::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--bg-inverse) 0%, rgba(4,26,14,.86) 45%, rgba(4,26,14,.7) 100%),
+    url("../img/hero-skyline-900.jpg") 50% 62% / cover no-repeat;
+  opacity: .9;
+}
 .section--dark h2, .section--dark h3, .section--dark h4 { color: #fff; }
 .section--dark .lede { color: rgba(255,255,255,.78); }
 .section--dark .muted { color: rgba(255,255,255,.64); }
@@ -482,6 +503,9 @@ strong, b { font-weight: 650; color: var(--text); }
   display: grid; gap: clamp(2.6rem, 5vw, 4.5rem); align-items: center;
   padding-block: clamp(3.6rem, 8vw, 7rem);
 }
+@media (min-width: 1000px) and (min-height: 760px) {
+  .hero-inner { min-height: min(calc(100svh - 116px), 900px); }
+}
 @media (min-width: 1000px) { .hero-inner { grid-template-columns: 1.1fr .9fr; } }
 .hero h1 { color: #fff; }
 .hero h1 .accent { color: var(--orange-glow); font-style: italic; font-weight: 600; }
@@ -545,15 +569,32 @@ strong, b { font-weight: 650; color: var(--text); }
 }
 
 /* ---------- 9. Page hero (interior pages) ---------- */
-.page-hero { position: relative; overflow: hidden; background: var(--green-deep); color: #fff; }
-.page-hero::before {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(820px 460px at 88% 0%, rgba(22,139,77,.48), transparent 62%),
-    radial-gradient(640px 440px at 0% 100%, rgba(240,124,26,.2), transparent 64%),
-    linear-gradient(160deg, #073F22, #04250F);
+/* Every interior page reuses the homepage photograph (already cached after the
+   first visit), cropped differently per page through --pos, under a heavier tint. */
+.page-hero { position: relative; overflow: hidden; isolation: isolate; background: var(--green-deep); color: #fff; }
+.page-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: url("../img/hero-skyline-900.jpg") var(--pos, 70% 45%) / cover no-repeat;
+  background-image: image-set(url("../img/hero-skyline-900.webp") type("image/webp"), url("../img/hero-skyline-900.jpg") type("image/jpeg"));
 }
-.page-hero > .wrap { position: relative; padding-block: clamp(2.9rem, 6vw, 5rem); }
+@media (min-width: 900px) {
+  .page-hero::after {
+    background-image: url("../img/hero-skyline.jpg");
+    background-image: image-set(url("../img/hero-skyline.webp") type("image/webp"), url("../img/hero-skyline.jpg") type("image/jpeg"));
+  }
+}
+.page-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(640px 440px at 0% 100%, rgba(240,124,26,.16), transparent 64%),
+    linear-gradient(90deg, rgba(4,31,17,.95) 0%, rgba(4,31,17,.86) 42%, rgba(4,31,17,.6) 78%, rgba(4,31,17,.5) 100%);
+}
+@media (max-width: 899px) {
+  .page-hero::before { background: linear-gradient(180deg, rgba(4,31,17,.8), rgba(4,31,17,.9) 60%, rgba(3,23,13,.95)); }
+}
+.page-hero > .wrap { position: relative; padding-block: clamp(3.4rem, 7.5vw, 6.5rem); }
+/* Fine brand rule along the base of every photographic band */
+.page-hero, .hero { border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, var(--brand-orange), var(--green-mid) 45%, transparent) 1; }
 .page-hero h1 { color: #fff; font-size: var(--step-4); max-width: 21ch; }
 .page-hero .lede { margin-top: 1.2rem; max-width: 62ch; color: rgba(255,255,255,.8); }
 .page-hero .btn-row { margin-top: 2rem; }
@@ -625,6 +666,45 @@ a.card:hover h3 { color: var(--link); }
 }
 .dvrow-side-label { font-size: .69rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .9rem; }
 
+/* Division tiles (homepage) */
+.dtiles { display: grid; gap: clamp(1rem, 2.2vw, 1.5rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.dtile {
+  position: relative; display: flex; flex-direction: column; overflow: hidden; isolation: isolate;
+  padding: clamp(1.6rem, 3.2vw, 2.6rem);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-xl);
+  transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out), border-color .4s var(--ease);
+}
+.dtile::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(520px 260px at 100% 0%, var(--tile-glow, rgba(11,87,48,.08)), transparent 70%);
+  transition: opacity .4s var(--ease); opacity: .9;
+}
+.dtile.is-orange { --tile-glow: rgba(240,124,26,.1); }
+.dtile:hover { transform: translateY(-6px); box-shadow: var(--shadow-l); border-color: var(--line-strong); }
+.dtile:hover::before { opacity: 1; }
+.dtile-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+.dtile-top .ico { width: 56px; height: 56px; border-radius: 17px; }
+.dtile-top .ico svg { width: 27px; height: 27px; }
+.dtile-num {
+  font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 3.8rem); font-weight: 700;
+  line-height: .8; letter-spacing: -.04em; color: var(--numeral); transition: color .35s var(--ease);
+}
+.dtile:hover .dtile-num { color: var(--accent-ink); }
+.dtile h3 { font-size: var(--step-2); margin-top: .55rem; max-width: 22ch; }
+.dtile h3 a { color: inherit; }
+.dtile h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.dtile h3 a:focus-visible { outline: none; }
+.dtile:has(h3 a:focus-visible) { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+.dtile > p { margin-top: .85rem; color: var(--text-soft); line-height: 1.66; }
+.dtile .chips { margin-top: 1.4rem; }
+.dtile .chip { font-size: .8rem; padding: .38rem .85rem; background: var(--surface-2); border-color: transparent; }
+.dtile-foot {
+  margin-top: auto; padding-top: 1.6rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  font-weight: 600; font-size: .93rem; color: var(--link);
+}
+.dtile-foot .dx-go { background: var(--surface-2); color: var(--link); }
+.dtile:hover .dtile-foot .dx-go { background: var(--brand-orange); color: var(--green-deep); transform: translateX(3px); }
+
 /* Division cards (divisions page) */
 .division-card { overflow: hidden; }
 .division-card::before {
@@ -656,7 +736,7 @@ a.card:hover h3 { color: var(--link); }
 .section--dark .feature .ico { background: rgba(255,255,255,.1); color: var(--orange-glow); }
 
 /* Stats */
-.stats { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-l); overflow: hidden; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.stats { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-l); overflow: hidden; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
 .stat { background: var(--surface); padding: clamp(1.4rem, 3vw, 2.1rem); }
 .stat .val { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 700; color: var(--link); line-height: 1; display: flex; align-items: baseline; gap: .12rem; }
 .stat .val sup { font-size: .48em; color: var(--accent-ink); top: -.15em; }
@@ -777,20 +857,36 @@ a.card:hover h3 { color: var(--link); }
 .form-branch-head svg { width: 16px; height: 16px; flex: none; }
 
 /* ---------- 12. CTA band ---------- */
-.cta-band { position: relative; overflow: hidden; background: #073F22; color: #fff; }
-.cta-band::before {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(660px 340px at 88% 10%, rgba(240,124,26,.34), transparent 62%),
-    radial-gradient(540px 320px at 6% 94%, rgba(22,139,77,.5), transparent 62%);
+.cta-band { position: relative; overflow: hidden; isolation: isolate; background: #052A16; color: #fff; }
+.cta-band::after {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: url("../img/hero-skyline-900.jpg") 50% 78% / cover no-repeat;
+  background-image: image-set(url("../img/hero-skyline-900.webp") type("image/webp"), url("../img/hero-skyline-900.jpg") type("image/jpeg"));
 }
-.cta-band > .wrap { position: relative; padding-block: clamp(3rem, 6vw, 4.8rem); display: grid; gap: 1.9rem; align-items: center; }
-@media (min-width: 900px) { .cta-band > .wrap { grid-template-columns: 1.25fr auto; } }
-.cta-band h2 { color: #fff; font-size: var(--step-3); }
-.cta-band p { margin-top: .85rem; color: rgba(255,255,255,.78); max-width: 56ch; }
+@media (min-width: 900px) {
+  .cta-band::after {
+    background-image: url("../img/hero-skyline.jpg");
+    background-image: image-set(url("../img/hero-skyline.webp") type("image/webp"), url("../img/hero-skyline.jpg") type("image/jpeg"));
+  }
+}
+.cta-band::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(700px 380px at 92% 0%, rgba(240,124,26,.22), transparent 62%),
+    linear-gradient(100deg, rgba(4,31,17,.95) 0%, rgba(4,31,17,.85) 50%, rgba(4,31,17,.62) 100%);
+}
+.cta-band > .wrap { position: relative; padding-block: clamp(3.6rem, 8vw, 6.2rem); display: grid; gap: 2.2rem; align-items: end; }
+@media (min-width: 960px) { .cta-band > .wrap { grid-template-columns: 1.3fr auto; } }
+.cta-band h2 { color: #fff; font-size: var(--step-4); max-width: 26ch; }
+.cta-band p:not(.eyebrow) { margin-top: 1rem; color: rgba(255,255,255,.8); max-width: 56ch; font-size: var(--step-1); line-height: 1.55; }
+.cta-band .btn-row { justify-content: flex-start; }
+.cta-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-top: 1.6rem; font-size: .84rem; color: rgba(255,255,255,.7); }
+.cta-meta li { display: inline-flex; align-items: center; gap: .45rem; }
+.cta-meta svg { width: 16px; height: 16px; color: var(--orange-glow); flex: none; }
 
 /* ---------- 13. Footer ---------- */
-.site-footer { background: var(--bg-inverse); color: rgba(255,255,255,.68); font-size: .92rem; }
+.site-footer { background: var(--bg-inverse) linear-gradient(180deg, #04220F, var(--bg-inverse) 40%); color: rgba(255,255,255,.68); font-size: .92rem; }
+[data-theme="dark"] .site-footer { background: var(--bg-inverse); border-top: 1px solid var(--line); }
 .site-footer a { color: rgba(255,255,255,.8); }
 .site-footer a:hover { color: var(--orange-glow); }
 .site-footer .brand-mark { background: #fff; border-radius: 12px; padding: 3px; width: 52px; height: 52px; }
@@ -878,6 +974,6 @@ a.card:hover h3 { color: var(--link); }
   body { color: #000; background: #fff; }
   body::after { display: none; }
   .hero, .page-hero { background: #fff !important; color: #000 !important; }
-  .hero-media, .hero::before { display: none !important; }
+  .hero-media, .hero::before, .page-hero::before, .page-hero::after, .section--dark::before { display: none !important; }
   .hero h1, .page-hero h1, .hero .lede, .page-hero .lede { color: #000 !important; }
 }

@@ -61,6 +61,16 @@ text, so anything that must be read uses `--accent-ink` instead.
   `main.js` fall back to the media query.
 - **Texture:** one fixed SVG grain layer over the page (`body::after`), blend
   mode `multiply` in light and `screen` in dark.
+- **Backgrounds:** the site has one photograph, `hero-skyline` (WebP + JPEG, at
+  900px and 1672px), and every photographic band reuses it, so it downloads once:
+  - the homepage hero (`<picture>`, preloaded);
+  - every interior `.page-hero`, cropped per page with an inline
+    `style="--pos: x% y%"` on the section;
+  - the `.cta-band` that closes each content page;
+  - very faintly behind `.section--dark`.
+  A brand-green gradient over the photo keeps text contrast; it is heaviest on
+  the text side and goes uniform below 900px. Light sections (`--alt`, `--sand`)
+  carry a fine architectural grid that fades out from one corner.
 
 ### Logo assets
 
@@ -75,6 +85,8 @@ derived from `symmetrix-logo.jpg` and sized for where it is used.
 | `apple-touch-icon.png` | 180px | iOS home screen and bookmarks |
 | `favicon-32.png` | 32px | Browser tab, for browsers without SVG favicon support |
 | `favicon.svg` | vector | Browser tab — see the note below |
+| `og-image.jpg` | 1200×630 | Social share preview (skyline + logo plate) |
+| `hero-skyline*.{webp,jpg}` | 900 / 1672px | The brand photograph — see Backgrounds |
 
 Two details worth knowing before regenerating any of them:
 
@@ -151,9 +163,11 @@ Homepage, first visit, gzipped (as GitHub Pages serves it):
 | JS | ~4 KB |
 | Logo mark (PNG) | 41 KB |
 | Fonts (3 woff2) | 123 KB |
-| **Total** | **~186 KB in 8 requests** |
+| Skyline photo (WebP, 1672px; 52 KB at 900px on phones) | 133 KB |
+| **Total** | **~320 KB in 9 requests** |
 
-Repeat visits are around 22 KB, since fonts and images cache.
+Interior pages reuse the cached photograph, so after the homepage they add no
+image weight. Repeat visits are around 22 KB.
 
 Notes for anyone changing this:
 
@@ -188,14 +202,13 @@ python3 -m http.server 8000
 
 ### GitHub Pages (current setup)
 
+Served at **https://symmetrixholdings.com** (the `CNAME` file). Canonical URLs,
+Open Graph tags, JSON-LD, `sitemap.xml` and `robots.txt` all use that domain.
+
 Pages is configured as **Settings → Pages → Deploy from a branch → `main` /
 `(root)`**. GitHub's own builder publishes on every push to `main`; there is no
 workflow file and no build step. `.nojekyll` is what stops Jekyll from ignoring
 `assets/`.
-
-Live at:
-
-    https://tolbertinnovation-debug.github.io/Symmetix/
 
 All internal links are relative, so serving from a sub-path needs no changes.
 
@@ -207,11 +220,9 @@ Plain static files, so these work as-is:
 - **Any shared host / cPanel** — upload the folder contents to `public_html`.
   (`.nojekyll` only matters on GitHub Pages; it stops Jekyll touching `assets/`.)
 
-### Moving to a custom domain
+### Changing the domain
 
-The canonical URLs, Open Graph tags, `sitemap.xml` and `robots.txt` currently
-point at the GitHub Pages URL, because that is where the site is served. When a
-real domain is ready:
+If the domain ever changes:
 
 1. Add a `CNAME` file at the repository root containing just the domain.
 2. Point DNS at GitHub Pages (`A` records to GitHub's IPs, or a `CNAME` to
@@ -219,9 +230,9 @@ real domain is ready:
 3. Rewrite the URLs in one pass:
 
    ```bash
-   grep -rl "tolbertinnovation-debug.github.io/Symmetix" . \
+   grep -rl "https://symmetrixholdings.com" . \
      --include="*.html" --include="*.xml" --include="*.txt" \
-     | xargs sed -i "s|https://tolbertinnovation-debug.github.io/Symmetix|https://www.yourdomain.com|g"
+     | xargs sed -i "s|https://symmetrixholdings.com|https://www.yourdomain.com|g"
    ```
 
 Leaving canonical tags pointing at a domain that does not resolve will keep the
@@ -247,8 +258,7 @@ real details.
 3. **Business hours** — Mon–Fri 8:30–17:30 and Sat 9:00–13:00 are assumed. They
    appear in the footer, on `contact.html`, and in the JSON-LD
    `openingHoursSpecification`.
-4. **Domain** — the site is canonicalised to the GitHub Pages URL. See
-   "Moving to a custom domain" above when a real domain is ready.
+4. **Domain** — canonicalised to `https://symmetrixholdings.com`.
 5. **Social profiles** — the footer deliberately links only to real, working
    channels (WhatsApp, email, phone). Add Facebook / LinkedIn / Instagram links
    to the `.socials` block in the footer when the accounts exist.
@@ -260,11 +270,10 @@ real details.
    <form class="form" id="enquiry-form" method="post" action="https://your-endpoint">
    ```
    `main.js` detects the `action` attribute and steps out of the way.
-7. **Photography.** The site is entirely type, brand geometry and colour — there
-   is not a single photograph on it. That was deliberate: no authentic images of
-   the company exist here, and stock or generated pictures of "our team" or "our
-   office" would misrepresent a real business. Commissioning real photography of
-   your people, premises and work is the single biggest visual upgrade left.
+7. **Photography.** The only photograph is the city skyline used as the brand
+   backdrop. It is an atmospheric scene, not a picture of the company's own
+   office or people, and the copy never presents it as one. Real photography of
+   your people, premises and work is still the biggest visual upgrade left.
 8. **Claims to verify** — the site states a one-business-day response target,
    free initial consultations, and written quotations before work starts. These
    are commitments; confirm the business can meet them, or edit the wording.
