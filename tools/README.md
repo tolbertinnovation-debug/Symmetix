@@ -5,7 +5,7 @@ deploy the site — they exist so the accessibility and quality claims in the ma
 README can be re-checked after any change, rather than taken on trust.
 
 ```bash
-python3 -m http.server 8765 &     # serve the site from the repo root
+python3 tools/serve.py &          # serve the site, with clean URLs like GitHub Pages
 npm i playwright                  # one-off
 node tools/verify.js
 node tools/contrast-audit.js

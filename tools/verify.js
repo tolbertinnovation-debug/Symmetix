@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 /* Run against a locally served copy of the site:
- *   python3 -m http.server 8765 &
+ *   python3 tools/serve.py &
  *   npm i playwright && node tools/verify.js
  * Override the URL with BASE_URL, or the browser with CHROME_PATH.
  */
@@ -26,7 +26,7 @@ const OUT = __dirname + '/shots';
         p.on('pageerror', e => problems.push(`${name}/${scheme}/${w}: pageerror ${e.message}`));
         p.on('requestfailed', r => problems.push(`${name}: request failed ${r.url()}`));
         p.on('request', r => { const u = r.url(); if (!u.startsWith('http://127.0.0.1:8765') && !u.startsWith('data:')) problems.push(`${name}: OFF-SITE request ${u}`); });
-        await p.goto(ROOT + name + '.html', { waitUntil:'load' });
+        await p.goto(ROOT + (name === 'index' ? '' : name), { waitUntil:'load' });
         await p.waitForTimeout(350);
         const themeOn = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
         if (themeOn !== scheme) problems.push(`${name}/${scheme}/${w}: stored theme not applied (got ${themeOn})`);
@@ -68,7 +68,7 @@ const OUT = __dirname + '/shots';
     // get the light site — light is the default, the OS is not consulted.
     const ctx = await browser.newContext({ viewport:{width:1440,height:900}, colorScheme:'dark' });
     const p = await ctx.newPage();
-    await p.goto(ROOT + 'index.html');
+    await p.goto(ROOT);
     await p.waitForTimeout(300);
     const fresh = await p.evaluate(() => ({
       attr: document.documentElement.getAttribute('data-theme'),
@@ -92,7 +92,7 @@ const OUT = __dirname + '/shots';
     if (after.pressed !== 'true') problems.push('theme toggle aria-pressed not updated');
     if (after.stored !== 'dark') problems.push('theme choice not persisted');
     // persists across navigation
-    await p.goto(ROOT + 'about.html');
+    await p.goto(ROOT + 'about');
     await p.waitForTimeout(300);
     const kept = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
     if (kept !== 'dark') problems.push('theme not applied on next page (flash risk)');
@@ -103,7 +103,7 @@ const OUT = __dirname + '/shots';
   {
     const ctx = await browser.newContext({ viewport:{width:1440,height:1000} });
     const p = await ctx.newPage();
-    await p.goto(ROOT + 'contact.html');
+    await p.goto(ROOT + 'contact');
     await p.waitForTimeout(400);
     const hiddenAtStart = await p.evaluate(() =>
       Array.from(document.querySelectorAll('[data-branch]'))
@@ -137,7 +137,7 @@ const OUT = __dirname + '/shots';
   {
     const ctx = await browser.newContext({ viewport:{width:390,height:844} });
     const p = await ctx.newPage();
-    await p.goto(ROOT + 'index.html');
+    await p.goto(ROOT);
     await p.click('.nav-toggle'); await p.waitForTimeout(500);
     if (!await p.evaluate(() => document.getElementById('drawer').classList.contains('is-open'))) problems.push('drawer did not open');
     await p.click('.drawer-close'); await p.waitForTimeout(400);
@@ -145,7 +145,7 @@ const OUT = __dirname + '/shots';
     await ctx.close();
     const ctx2 = await browser.newContext({ viewport:{width:1440,height:900} });
     const p2 = await ctx2.newPage();
-    await p2.goto(ROOT + 'index.html');
+    await p2.goto(ROOT);
     await p2.hover('.has-dropdown .nav-link'); await p2.waitForTimeout(450);
     if (await p2.evaluate(() => getComputedStyle(document.querySelector('.dropdown')).visibility) !== 'visible') problems.push('dropdown did not open');
     await ctx2.close();
@@ -155,7 +155,7 @@ const OUT = __dirname + '/shots';
   {
     const ctx = await browser.newContext({ viewport:{width:1440,height:900}, javaScriptEnabled:false });
     const p = await ctx.newPage();
-    await p.goto(ROOT + 'index.html');
+    await p.goto(ROOT);
     await p.waitForTimeout(400);
     const vis = await p.evaluate(() => {
       const els = document.querySelectorAll('.reveal');

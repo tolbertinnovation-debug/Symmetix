@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 /* Run against a locally served copy of the site:
- *   python3 -m http.server 8765 &
+ *   python3 tools/serve.py &
  *   npm i playwright && node tools/contrast-audit.js
  * Override the URL with BASE_URL, or the browser with CHROME_PATH.
  */
@@ -74,7 +74,7 @@ const SCRIPT = () => {
       const ctx = await b.newContext({ viewport:{width:1440,height:1000} });
       await ctx.addInitScript(t => { try { localStorage.setItem('sx-theme', t); } catch (e) {} }, scheme);
       const p = await ctx.newPage();
-      await p.goto(ROOT + name + '.html');
+      await p.goto(ROOT + (name === 'index' ? '' : name));
       const applied = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
       if (applied !== scheme) { console.log(`  !! ${name}: expected data-theme=${scheme}, got ${applied}`); }
       await p.evaluate(async()=>{await document.fonts.ready;});
@@ -85,7 +85,7 @@ const SCRIPT = () => {
       checked++;
       if (bad.length) {
         fails += bad.length;
-        console.log(`\n${scheme.toUpperCase()} / ${name}.html`);
+        console.log(`\n${scheme.toUpperCase()} / /${name === 'index' ? '' : name}`);
         bad.forEach(x => console.log(`  ${x.ratio}:1 (need ${x.need})  <${x.tag}.${x.cls}> ${x.size}px/${x.weight}  ${x.color} on ${x.bg}  "${x.sample}"`));
       }
       await ctx.close();
