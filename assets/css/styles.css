@@ -1123,7 +1123,76 @@ h3, h4, .dx-name {
   .hero-signature-title, .cta-band h2 { color: CanvasText; }
 }
 
+/* ---------- 19. Service imagery and photographic backgrounds ---------- */
+.page-about { --page-photo: url("../img/services/global-partnership-small.webp"); --photo-position: 65% 60%; }
+.page-accountancy { --page-photo: url("../img/services/financial-growth-small.webp"); --photo-position: 65% 55%; }
+.page-travels { --page-photo: url("../img/services/global-travel-small.webp"); --photo-position: 65% 45%; }
+.page-education { --page-photo: url("../img/services/education-pathways-small.webp"); --photo-position: 65% 45%; }
+.page-logistics { --page-photo: url("../img/services/logistics-network-small.webp"); --photo-position: 60% 45%; }
+.page-divisions { --page-photo: url("../img/services/world-connections-small.webp"); --photo-position: 65% 55%; }
+.page-contact { --page-photo: url("../img/services/connected-team-small.webp"); --photo-position: 65% 50%; }
+.page-privacy { --page-photo: url("../img/services/digital-network-small.webp"); --photo-position: center 65%; }
+.page-404 { --page-photo: url("../img/services/future-network-small.webp"); --photo-position: center; }
+.page-hero::after {
+  inset: 0; width: auto; height: auto; aspect-ratio: auto;
+  border: 0; border-radius: 0; box-shadow: none;
+  background: var(--page-photo) var(--photo-position, center) / cover no-repeat;
+  z-index: -2;
+}
+.page-hero::before {
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(3,31,21,.96) 0%, rgba(3,31,21,.9) 48%, rgba(3,31,21,.62) 100%);
+}
+.hero-media img { object-position: 65% 62%; }
+.hero::before {
+  background: linear-gradient(90deg, rgba(3,31,21,.95) 0%, rgba(3,31,21,.86) 48%, rgba(3,31,21,.54) 100%);
+}
+.hero-index { background: rgba(10,52,34,.96); }
+.service-card-image {
+  display: block; width: calc(100% + 2 * var(--image-inset)); max-width: none;
+  height: clamp(190px, 22vw, 280px); object-fit: cover; object-position: center 52%;
+  margin: calc(-1 * var(--image-inset)) calc(-1 * var(--image-inset)) 1.5rem;
+  border-bottom: 1px solid var(--line); background: #F2F6F4;
+}
+.dtile { --image-inset: clamp(1.6rem, 3.2vw, 2.6rem); }
+.division-card { --image-inset: clamp(1.45rem, 2.6vw, 2.05rem); }
+.dtile:has(a[href="/education"]) .service-card-image,
+.division-card:has(a[href="/education"]) .service-card-image { object-fit: contain; padding: .6rem; }
+.division-card .num { top: calc(clamp(190px, 22vw, 280px) + 1.35rem); margin-top: 0; }
+.service-overview-image {
+  width: 100%; height: clamp(220px, 30vw, 350px); object-fit: cover;
+  object-position: center 55%; border-radius: 16px; margin-bottom: 1.5rem;
+}
+.page-education .service-overview-image { object-fit: contain; background: #fff; padding: 1rem; }
+.section--sand::before {
+  background: url("../img/services/future-network-small.webp") center / cover;
+  opacity: .08; mask-image: none; -webkit-mask-image: none;
+}
+.cta-band::before {
+  background: linear-gradient(90deg, rgba(3,31,21,.94), rgba(3,31,21,.85)),
+              url("../img/services/digital-network-small.webp") center 65% / cover;
+}
+@media (min-width: 900px) {
+  .page-about { --page-photo: url("../img/services/global-partnership.webp"); }
+  .page-accountancy { --page-photo: url("../img/services/financial-growth.webp"); }
+  .page-travels { --page-photo: url("../img/services/global-travel.webp"); }
+  .page-education { --page-photo: url("../img/services/education-pathways.webp"); }
+  .page-logistics { --page-photo: url("../img/services/logistics-network.webp"); }
+  .page-divisions { --page-photo: url("../img/services/world-connections.webp"); }
+  .page-contact { --page-photo: url("../img/services/connected-team.webp"); }
+  .page-privacy { --page-photo: url("../img/services/digital-network.webp"); }
+  .page-404 { --page-photo: url("../img/services/future-network.webp"); }
+}
+@media (max-width: 599px) {
+  .hero::before, .page-hero::before { background: rgba(3,31,21,.9); }
+  .hero-media img { object-position: 55% 50%; }
+}
+@media (forced-colors: active) {
+  .hero-media, .page-hero::before, .page-hero::after, .section--sand::before { display: none; }
+}
+
 @media print {
+  .service-card-image, .service-overview-image, .section--sand::before { display: none !important; }
   .site-header, .topbar, .drawer, .float-actions, .cta-band, .site-footer, .theme-toggle { display: none !important; }
   body { color: #000; background: #fff; }
   body::after { display: none; }

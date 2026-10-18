@@ -292,11 +292,13 @@ real details.
    clearly labelled test for each division and verify the received fields and
    Reply-To address. Delivery has not been confirmed until these checks pass.
    Documentation: https://formsubmit.co/documentation
-7. **Photography.** The site is entirely type, brand geometry and colour — there
-   is not a single photograph on it. That was deliberate: no authentic images of
-   the company exist here, and stock or generated pictures of "our team" or "our
-   office" would misrepresent a real business. Commissioning real photography of
-   your people, premises and work is the single biggest visual upgrade left.
+7. **Service imagery.** User-supplied images appear in service cards, division
+   introductions and decorative backgrounds. They illustrate services and do not
+   claim to show the company's actual staff, office or equipment. Optimised WebP
+   assets live in `assets/img/services/`, with 600-pixel mobile variants and
+   larger versions up to 1200 pixels wide. Content images have descriptive alt
+   text, dimensions and lazy loading. Background images use dark overlays;
+   abstract textures stay subtle behind solid content surfaces.
 8. **Claims to verify** — the site states a one-business-day response target,
    free initial consultations, and written quotations before work starts. These
    are commitments; confirm the business can meet them, or edit the wording.
