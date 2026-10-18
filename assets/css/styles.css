@@ -988,76 +988,54 @@ a.card:hover h3 { color: var(--link); }
   .contact-card { padding: 1.1rem; }
 }
 
-/* ---------- 18. Sculpted display lettering ---------- */
-/* Reference-inspired depth uses live, selectable type and existing local fonts. */
-.hero h1, .page-hero h1 {
+/* ---------- 18. Professional typography ---------- */
+/* Inter supports clear everyday reading; Playfair gives major headings character.
+   Both families are self hosted and already preloaded across the website. */
+body { line-height: 1.7; }
+h1, h2 { font-weight: 650; letter-spacing: -.025em; line-height: 1.16; }
+h3, h4, .dx-name {
   font-family: var(--font-body);
-  font-weight: 700;
-  letter-spacing: -.045em;
-  line-height: 1.15;
-  color: #F2F6F3;
-  text-shadow: 0 1px 0 #CAD7CE, 0 2px 0 #819A8A,
-               0 3px 0 #3F6A50, 0 4px 0 #173F29,
-               0 10px 20px rgba(0,0,0,.32);
+  font-weight: 650; letter-spacing: -.015em; line-height: 1.35;
+}
+.hero h1, .page-hero h1 {
+  font-family: var(--font-body); font-weight: 700;
+  letter-spacing: -.04em; line-height: 1.14;
+  color: #fff; text-shadow: none;
 }
 .hero h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); }
 .hero h1 .accent {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 700;
-  color: #FFE1A0;
-  text-shadow: 0 1px 0 #F3B850, 0 2px 0 #A96516,
-               0 3px 0 #754311, 0 4px 0 #3F2D16,
-               0 8px 16px rgba(0,0,0,.35);
+  font-family: var(--font-display); font-weight: 600; font-style: italic;
+  color: var(--orange-glow); background: none; text-shadow: none; filter: none;
 }
 .hero-signature-title {
-  color: #FFE1A0;
-  text-shadow: 0 1px 0 #986128, 0 3px 8px rgba(0,0,0,.25);
+  font-family: var(--font-display); font-weight: 600;
+  color: #fff; line-height: 1.3; text-shadow: none;
 }
-/* Emerald relief on light surfaces; pearl lettering on dark surfaces. */
-.section-head h2, .split h2 {
-  font-weight: 750;
-  text-shadow: 0 1px 0 rgba(255,255,255,.9),
-               0 2px 0 rgba(5,48,26,.12), 0 5px 12px rgba(5,48,26,.06);
-}
-.section--dark h2, [data-theme="dark"] .section-head h2,
-[data-theme="dark"] .split h2 {
-  text-shadow: 0 1px 0 #62846E, 0 2px 0 #244B34, 0 5px 14px rgba(0,0,0,.3);
-}
+.section-head h2, .split h2 { font-weight: 650; text-shadow: none; }
+.card h3, .division-card h3 { font-size: clamp(1.2rem, 1.55vw, 1.45rem); }
+.feature h4, .step h4 { font-size: 1.05rem; }
+.card p, .feature p, .step p, .acc-item .acc-body { font-size: 1rem; line-height: 1.75; }
+.lede { line-height: 1.7; }
+.eyebrow { line-height: 1.6; letter-spacing: .14em; }
+.nav-link, .btn, .field label { font-weight: 600; }
+.field input, .field select, .field textarea { font-size: 1rem; line-height: 1.5; }
 .stat .val, .division-card .num, .dvrow-num {
-  font-family: var(--font-body);
-  font-weight: 700;
-  letter-spacing: -.055em;
-  text-shadow: 0 1px 0 var(--surface), 0 3px 0 var(--line);
+  font-family: var(--font-body); font-weight: 650;
+  letter-spacing: -.04em; font-variant-numeric: lining-nums tabular-nums;
+  text-shadow: none;
 }
 .cta-band h2 {
-  font-family: var(--font-display); font-style: italic;
-  color: #FFE1A0;
-  text-shadow: 0 1px 0 #926022, 0 3px 8px rgba(0,0,0,.25);
+  font-family: var(--font-display); font-weight: 600; font-style: normal;
+  color: #fff; text-shadow: none; line-height: 1.22;
 }
-/* Gold stays bright against the forest hero without changing the brand logo. */
-@supports ((background-clip: text) or (-webkit-background-clip: text)) {
-  .hero h1 .accent {
-    display: inline-block; max-width: 100%;
-    background-image: linear-gradient(180deg, #FFF5CF 0%, #FFE5A5 30%, #F8C65E 49%, #FFF0BE 53%, #F8CB73 76%, #FFE4AA 100%);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent;
-    text-shadow: none;
-    filter: drop-shadow(0 1px 0 #9C641C) drop-shadow(0 2px 0 #53370F) drop-shadow(0 5px 5px rgba(0,0,0,.28));
-    -webkit-box-decoration-break: clone; box-decoration-break: clone;
-  }
-}
+.quote blockquote { font-weight: 500; line-height: 1.5; }
 @media (max-width: 599px) {
-  .hero h1 { font-size: clamp(2.1rem, 9.6vw, 3.5rem); letter-spacing: -.04em; }
+  .hero h1 { font-size: clamp(2.1rem, 9.6vw, 3.5rem); }
   .page-hero h1 { font-size: clamp(2rem, 8.8vw, 3rem); }
-  .hero h1, .page-hero h1 { text-shadow: 0 1px 0 #96B1A0, 0 2px 0 #315C42, 0 5px 12px rgba(0,0,0,.3); }
 }
 @media (forced-colors: active) {
   .hero h1, .page-hero h1, .hero h1 .accent,
-  .hero-signature-title, .section-head h2, .split h2,
-  .stat .val, .division-card .num, .dvrow-num, .cta-band h2 {
-    background: none; color: CanvasText; text-shadow: none; filter: none;
-  }
+  .hero-signature-title, .cta-band h2 { color: CanvasText; }
 }
 
 @media print {
