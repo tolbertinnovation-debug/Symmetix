@@ -907,6 +907,9 @@ a.card:hover h3 { color: var(--link); }
   display: flex; flex-wrap: wrap; gap: .7rem 1.5rem; align-items: center; justify-content: space-between;
   padding-block: 1.35rem; border-top: 1px solid rgba(255,255,255,.1); font-size: .82rem;
 }
+.footer-credit { flex-basis: 100%; text-align: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.1); }
+.footer-credit a { color: var(--orange-glow); font-weight: 600; }
+.footer-credit a:hover { color: #fff; text-decoration: underline; text-underline-offset: .2em; }
 .footer-bottom ul { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; }
 .socials { display: flex; gap: .5rem; margin-top: 1.5rem; }
 .socials a {
