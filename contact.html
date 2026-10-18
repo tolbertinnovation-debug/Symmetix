@@ -231,7 +231,7 @@
         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.2 12.3 2.6 2.6 5-5.4"/></svg><span>A reply within <strong>one business day</strong>, with the division that will handle your file named.</span></li>
         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.2 12.3 2.6 2.6 5-5.4"/></svg><span>A <strong>written quotation</strong> before any work begins &mdash; scope, fee and timeline.</span></li>
         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.2 12.3 2.6 2.6 5-5.4"/></svg><span>Choose a division, and the form will ask the two or three questions we need answered to prepare a quotation.</span></li>
-        <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.2 12.3 2.6 2.6 5-5.4"/></svg><span>Your details are used only to answer this enquiry. We never sell or share them.</span></li>
+        <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.2 12.3 2.6 2.6 5-5.4"/></svg><span>Your details are used only to handle your enquiry. FormSubmit processes submissions and emails them to our team.</span></li>
       </ul>
       <div class="panel panel--soft mt-3">
         <p class="eyebrow">Prefer to talk?</p>
@@ -240,7 +240,9 @@
     </div>
 
     <div class="panel reveal" data-delay="1">
-      <form class="form" id="enquiry-form" method="post" novalidate data-mailto="info@symmetrixholdings.com">
+      <form class="form" id="enquiry-form" method="post" action="https://formsubmit.co/symmetrixholdings@gmail.com">
+        <input type="hidden" name="_subject" value="Symmetrix website enquiry">
+        <input type="hidden" name="_template" value="table">
         <div class="form-row">
           <div class="field">
             <label for="f-name">Full name <span class="req" aria-hidden="true">*</span></label>
@@ -361,11 +363,11 @@
         </div>
         <div class="hp" aria-hidden="true">
           <label for="f-trap">Leave this field empty</label>
-          <input id="f-trap" name="company-website" type="text" tabindex="-1" autocomplete="off">
+          <input id="f-trap" name="_honey" type="text" tabindex="-1" autocomplete="off">
         </div>
         <p class="form-status" role="status" hidden></p>
         <button class="btn btn--accent" type="submit">Send enquiry <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
-        <p class="form-note">Fields marked <span class="req">*</span> are required. We use your details only to answer this enquiry &mdash; see our <a href="privacy.html">privacy notice</a>.</p>
+        <p class="form-note">Fields marked <span class="req">*</span> are required. Your enquiry is sent to symmetrixholdings@gmail.com through FormSubmit. See our <a href="privacy.html">privacy notice</a>.</p>
       </form>
     </div>
   </div>
@@ -459,6 +461,6 @@
   <a class="fab fab--wa" href="https://wa.me/231880832316" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path fill="currentColor" stroke="none" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.42 1.3-1.96 1.35-.5.05-1.13.08-3.24-.79-2.5-1.03-4.06-3.66-4.18-3.83-.12-.17-.99-1.35-.99-2.57 0-1.22.64-1.82.87-2.07.23-.25.5-.31.67-.31.17 0 .34 0 .49.01.16.01.37-.06.58.44.21.5.72 1.77.78 1.9.06.13.1.28.01.45-.09.17-.14.28-.28.43-.14.15-.29.34-.42.45-.14.13-.29.27-.12.53.17.26.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.14.46.12.63-.07.17-.19.73-.85.93-1.14.2-.29.39-.24.66-.14.27.1 1.7.8 1.99.95.29.14.48.22.55.34.07.12.07.71-.17 1.39Z"/></svg></a>
   <button class="fab fab--top" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg></button>
 </div>
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=20261018-formsubmit" defer></script>
 </body>
 </html>
