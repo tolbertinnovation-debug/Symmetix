@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Symmetrix Management Holdings LLC — design system v2
+   Symmetrix Management Holdings LLC — design system v3
    Forest green + signal orange, taken from the corporate mark.
    Light and dark themes are both first-class; every colour below is a token.
    ========================================================================== */
@@ -92,7 +92,7 @@
   --accent-ink: var(--orange-ink);
   --link: #0B5730;
   --halo: rgba(6, 40, 22, .09);
-  --grain: .05;
+  --grain: .025;
   --grid-line: rgba(11, 87, 48, .055);
   --hero-from: #063A20;
   --hero-via: #052E19;
@@ -113,7 +113,7 @@
 
   /* Space & shape */
   --gutter: clamp(1.15rem, 4vw, 2.5rem);
-  --section-y: clamp(3.8rem, 8vw, 7.5rem);
+  --section-y: clamp(3.5rem, 7vw, 6.5rem);
   --maxw: 1240px;
   --maxw-narrow: 760px;
   --radius-s: 8px;
@@ -150,7 +150,7 @@
   --accent-ink: var(--orange-glow);
   --link: #79D3A2;
   --halo: rgba(0, 0, 0, .5);
-  --grain: .08;
+  --grain: .04;
   --grid-line: rgba(255, 255, 255, .035);
   --hero-from: #06301B;
   --hero-via: #041F13;
@@ -507,7 +507,7 @@ strong, b { font-weight: 650; color: var(--text); }
   .hero-inner { min-height: min(calc(100svh - 116px), 900px); }
 }
 @media (min-width: 1000px) { .hero-inner { grid-template-columns: 1.1fr .9fr; } }
-.hero h1 { color: #fff; }
+.hero h1 { color: #fff; font-size: clamp(2.75rem, 4.9vw, 4.55rem); line-height: 1.09; }
 .hero h1 .accent { color: var(--orange-glow); font-style: italic; font-weight: 600; }
 .hero .lede { margin-top: 1.4rem; max-width: 52ch; color: rgba(255,255,255,.8); }
 .hero .btn-row { margin-top: 2.1rem; }
@@ -516,7 +516,7 @@ strong, b { font-weight: 650; color: var(--text); }
   margin-top: 2.5rem; padding-top: 1.7rem; border-top: 1px solid rgba(255,255,255,.15);
   display: grid; gap: 1.3rem 2rem; grid-template-columns: repeat(auto-fit, minmax(146px, 1fr));
 }
-.hero-facts dt { font-size: .68rem; font-weight: 650; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.52); }
+.hero-facts dt { font-size: .68rem; font-weight: 650; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.72); }
 .hero-facts dd { margin: .35rem 0 0; font-family: var(--font-display); font-size: clamp(1rem, 3.4vw, 1.3rem); font-weight: 700; color: #fff; }
 .hero-facts dd a { color: #fff; }
 .hero-facts dd a:hover { color: var(--orange-glow); }
@@ -535,7 +535,7 @@ strong, b { font-weight: 650; color: var(--text); }
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: .9rem 1.1rem .8rem;
   font-size: .68rem; font-weight: 650; letter-spacing: .17em; text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,.72);
 }
 .hero-index-label span { color: var(--orange-glow); }
 .dx {
@@ -969,11 +969,169 @@ a.card:hover h3 { color: var(--link); }
 .prose li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-orange); }
 .prose a { text-decoration: underline; text-underline-offset: .18em; }
 
+/* ---------- 17. Editorial polish ---------- */
+/* Shared surfaces keep every division connected to the parent brand. */
+.eyebrow + h2 { margin-top: .9rem; }
+.site-header { border-bottom-color: var(--line-soft); }
+.nav { min-height: 86px; }
+.brand-name { font-size: 1.45rem; }
+.brand-sub { line-height: 1.4; }
+.nav-link { padding-block: .75rem; }
+.btn { min-height: 48px; border-radius: 12px; }
+.btn--sm { min-height: 42px; border-radius: 10px; }
+.theme-toggle, .drawer-close { min-width: 44px; min-height: 44px; }
+
+.hero { border-bottom: 5px solid var(--brand-orange); }
+.hero-inner { padding-block: clamp(3.5rem, 6vw, 5.75rem); }
+.hero-lead > .eyebrow { max-width: 100%; line-height: 1.7; }
+.hero-lead > h1 { margin-top: 1.15rem; }
+.hero .lede { font-size: clamp(1.03rem, 1.3vw, 1.2rem); max-width: 48ch; }
+.hero .btn--accent { box-shadow: 0 8px 28px -12px rgba(240,124,26,.65); }
+.hero-index { background: #12452F; padding: .7rem; border-color: rgba(255,255,255,.22); }
+.hero-signature { display: flex; gap: 1.1rem; align-items: center; padding: 1rem 1rem 1.5rem; }
+.hero-signature img {
+  width: 88px; height: 88px; flex: none; object-fit: contain;
+  padding: 9px; background: #fff; border-radius: 22px;
+  box-shadow: 0 12px 30px -16px rgba(0,0,0,.5);
+}
+.hero-signature-kicker { font-size: .65rem; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-glow); }
+.hero-signature-title { margin-top: .45rem; font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.18; color: #fff; }
+.hero-index-label { padding-top: .75rem; border-top: 1px solid rgba(255,255,255,.2); }
+.dx { padding-block: 1.2rem; border-radius: 12px; }
+.dx-name { font-size: 1.25rem; }
+.dx-note { color: #C4D5CC; line-height: 1.55; }
+.dx-num { font-family: var(--font-body); font-size: .73rem; letter-spacing: .06em; color: var(--orange-glow); }
+.dx-go { border: 1px solid rgba(255,255,255,.2); background: transparent; }
+
+/* Decorative linework is intentionally static and never blocks the content. */
+.page-hero { isolation: isolate; border-bottom: 4px solid var(--brand-orange); }
+.page-hero::before { z-index: -2; }
+.page-hero::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  width: min(65vw, 700px); aspect-ratio: 1; right: -8%; top: -50%;
+  border: 1px solid rgba(255,255,255,.16); border-radius: 50%;
+  box-shadow: 0 0 0 50px rgba(255,255,255,.035), 0 0 0 100px rgba(255,255,255,.025), 0 0 0 150px rgba(255,255,255,.018);
+}
+.page-hero > .wrap { padding-block: clamp(3rem, 6vw, 5.25rem); }
+.page-hero h1 { font-size: clamp(2.35rem, 4.3vw, 4rem); line-height: 1.13; }
+.page-hero-icon { border-radius: 18px; background: #12452F; box-shadow: 0 10px 30px -20px #000; }
+.crumbs { margin-bottom: 1.6rem; }
+
+.card, .panel, .contact-card { box-shadow: 0 8px 28px -24px var(--halo); }
+.card--hover:hover { border-color: var(--accent-ink); box-shadow: var(--shadow-l); }
+.division-card::before { transform: scaleX(1); height: 4px; }
+.division-card .ico { width: 60px; height: 60px; border-radius: 18px; }
+.division-card h3 { font-size: var(--step-2); }
+.stats { box-shadow: var(--shadow); }
+.stat { padding-block: clamp(1.65rem, 3vw, 2.35rem); }
+.stat .val { font-size: clamp(2.7rem, 4vw, 3.7rem); font-variant-numeric: lining-nums; }
+.quote { border-radius: 0 var(--radius-l) var(--radius-l) 0; }
+.quote blockquote { line-height: 1.45; }
+.dvrow { transition: background-color .25s var(--ease); }
+.dvrow-head .ico { border-radius: 16px; }
+.dvrow-side-label { padding-bottom: .65rem; border-bottom: 1px solid var(--line); }
+.acc-item summary { padding-block: 1.4rem; }
+.acc-item[open] summary { color: var(--link); }
+.contact-card { padding: 1.5rem; }
+.field input, .field select, .field textarea { min-height: 48px; }
+.cta-band { border-top: 1px solid rgba(255,255,255,.15); }
+.cta-band > .wrap { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+.cta-band h2 { font-size: clamp(2rem, 3vw, 3rem); max-width: 24ch; line-height: 1.16; }
+.site-footer .footer-list a { display: inline-block; padding-block: .15rem; }
+.footer-h { color: var(--orange-glow); }
+
+@media (min-width: 1000px) {
+  .hero-inner { grid-template-columns: minmax(0, 1.18fr) minmax(0, .92fr); gap: clamp(2rem, 4vw, 4rem); }
+  .hero-index { transform: rotate(1deg); }
+  .hero-index > * { transform: rotate(-1deg); }
+  .hero-index > .dx:hover, .hero-index > .dx:focus-visible { transform: rotate(-1deg) translateX(3px); }
+}
+@media (hover: hover) {
+  .dvrow:hover { background: var(--bg-alt); }
+}
+@media (max-width: 1079px) {
+  .nav { min-height: 78px; }
+  .theme-toggle-mobile { margin-left: auto; }
+}
+@media (max-width: 599px) {
+  .hero .btn-row { display: grid; }
+  .hero .btn-row .btn { width: 100%; }
+  .hero-facts { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; }
+  .hero-facts > :first-child { grid-column: 1 / -1; }
+  .hero-signature { gap: .85rem; padding-inline: .6rem; }
+  .hero-signature img { width: 72px; height: 72px; border-radius: 18px; }
+  .hero-signature-kicker { font-size: .6rem; letter-spacing: .1em; }
+  .hero-index-label { padding-inline: .6rem; letter-spacing: .1em; }
+  .dx { padding-inline: .6rem; column-gap: .6rem; }
+  .dx-name { font-size: 1.13rem; }
+  .dx-note { font-size: .79rem; }
+  .brand { gap: .5rem; }
+  .brand-mark { width: 42px; height: 42px; }
+  .brand-name { font-size: 1.2rem; }
+  .brand-sub { font-size: .49rem; letter-spacing: .1em; }
+  .nav { gap: .6rem; }
+  .contact-card { padding: 1.1rem; }
+}
+
+/* ---------- 18. Professional typography ---------- */
+/* Inter supports clear everyday reading; Playfair gives major headings character.
+   Both families are self hosted and already preloaded across the website. */
+body { line-height: 1.7; }
+h1, h2 { font-weight: 650; letter-spacing: -.025em; line-height: 1.16; }
+h3, h4, .dx-name {
+  font-family: var(--font-body);
+  font-weight: 650; letter-spacing: -.015em; line-height: 1.35;
+}
+.hero h1, .page-hero h1 {
+  font-family: var(--font-body); font-weight: 700;
+  letter-spacing: -.04em; line-height: 1.14;
+  color: #fff; text-shadow: none;
+}
+.hero h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); }
+.hero h1 .accent {
+  font-family: var(--font-display); font-weight: 600; font-style: italic;
+  color: var(--orange-glow); background: none; text-shadow: none; filter: none;
+}
+.hero-signature-title {
+  font-family: var(--font-display); font-weight: 600;
+  color: #fff; line-height: 1.3; text-shadow: none;
+}
+.section-head h2, .split h2 { font-weight: 650; text-shadow: none; }
+.card h3, .division-card h3 { font-size: clamp(1.2rem, 1.55vw, 1.45rem); }
+.feature h4, .step h4 { font-size: 1.05rem; }
+.card p, .feature p, .step p, .acc-item .acc-body { font-size: 1rem; line-height: 1.75; }
+.lede { line-height: 1.7; }
+.eyebrow { line-height: 1.6; letter-spacing: .14em; }
+.nav-link, .btn, .field label { font-weight: 600; }
+.field input, .field select, .field textarea { font-size: 1rem; line-height: 1.5; }
+.stat .val, .division-card .num, .dvrow-num {
+  font-family: var(--font-body); font-weight: 650;
+  letter-spacing: -.04em; font-variant-numeric: lining-nums tabular-nums;
+  text-shadow: none;
+}
+.cta-band h2 {
+  font-family: var(--font-display); font-weight: 600; font-style: normal;
+  color: #fff; text-shadow: none; line-height: 1.22;
+}
+.quote blockquote { font-weight: 500; line-height: 1.5; }
+@media (max-width: 599px) {
+  .hero h1 { font-size: clamp(2.1rem, 9.6vw, 3.5rem); }
+  .page-hero h1 { font-size: clamp(2rem, 8.8vw, 3rem); }
+}
+@media (forced-colors: active) {
+  .hero h1, .page-hero h1, .hero h1 .accent,
+  .hero-signature-title, .cta-band h2 { color: CanvasText; }
+}
+
 @media print {
   .site-header, .topbar, .drawer, .float-actions, .cta-band, .site-footer, .theme-toggle { display: none !important; }
   body { color: #000; background: #fff; }
   body::after { display: none; }
   .hero, .page-hero { background: #fff !important; color: #000 !important; }
   .hero-media, .hero::before, .page-hero::before, .page-hero::after, .section--dark::before { display: none !important; }
-  .hero h1, .page-hero h1, .hero .lede, .page-hero .lede { color: #000 !important; }
+  .hero h1, .page-hero h1, .hero h1 .accent, .hero .lede, .page-hero .lede,
+  .section-head h2, .split h2, .stat .val, .division-card .num, .dvrow-num {
+    background: none !important; color: #000 !important;
+    text-shadow: none !important; filter: none !important;
+  }
 }

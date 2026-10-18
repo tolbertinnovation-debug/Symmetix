@@ -173,6 +173,8 @@
   /* ---------- Enquiry form ---------- */
   var form = document.getElementById('enquiry-form');
   if (form) {
+    // Keep native required-field checks available when JavaScript is disabled.
+    form.noValidate = true;
     var status = form.querySelector('.form-status');
     var divisionSelect = form.elements.division;
     var branches = form.querySelectorAll('[data-branch]');
@@ -232,22 +234,11 @@
       });
     });
 
-    var summarise = function () {
-      var lines = [];
-      Array.prototype.forEach.call(form.querySelectorAll('input, select, textarea'), function (f) {
-        if (f.disabled || !f.name || f.name === 'company-website' || !f.value.trim()) return;
-        var label = form.querySelector('label[for="' + f.id + '"]');
-        var name = label ? label.textContent.replace('*', '').trim() : f.name;
-        lines.push(name + ': ' + f.value.trim());
-      });
-      return lines.join('\n');
-    };
-
     form.addEventListener('submit', function (event) {
       var ok = true;
       liveFields().forEach(function (input) { if (!validate(input)) ok = false; });
 
-      var trap = form.querySelector('input[name="company-website"]');
+      var trap = form.querySelector('input[name="_honey"]');
       if (trap && trap.value) { event.preventDefault(); return; }
 
       if (!ok) {
@@ -262,24 +253,14 @@
         return;
       }
 
-      // No form endpoint configured yet: hand the enquiry to the visitor's mail
-      // client so nothing is lost. Setting the form's `action` to a real
-      // endpoint makes this branch step aside — see the README.
-      if (!form.getAttribute('action')) {
-        event.preventDefault();
+      // Submit directly to FormSubmit after validation. It handles verification,
+      // spam checks and the confirmation page; no email application is needed.
+      var subject = form.querySelector('input[name="_subject"]');
+      if (subject) {
         var division = (divisionSelect && divisionSelect.value) || 'General enquiry';
-        var name = (form.elements.name.value || '').trim();
-        var href = 'mailto:' + (form.getAttribute('data-mailto') || '') +
-          '?subject=' + encodeURIComponent('Website enquiry — ' + division) +
-          '&body=' + encodeURIComponent(summarise());
-        window.location.href = href;
-        if (status) {
-          status.hidden = false;
-          status.setAttribute('data-state', 'ok');
-          status.textContent = 'Thank you, ' + (name.split(' ')[0] || 'and welcome') +
-            '. Your email app is opening with this enquiry ready to send — or call us on (+231) 0880832316.';
-        }
+        subject.value = 'Symmetrix website enquiry: ' + division;
       }
+
     });
   }
 })();

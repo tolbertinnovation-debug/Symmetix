@@ -117,7 +117,8 @@ JavaScript disabled.
 - **Division-aware enquiry form:** choosing a division reveals the two or three
   follow-up questions that division actually needs to quote. Hidden branches are
   `disabled` as well as `hidden`, so they can never block validation, and the
-  generated email includes whatever was filled in.
+  submission includes the completed fields for the selected division. FormSubmit
+  delivers enquiries to `symmetrixholdings@gmail.com`.
 - `prefers-reduced-motion` is respected throughout, including view transitions.
 
 ## Accessibility
@@ -261,8 +262,9 @@ Everything below is content, not code. The phone numbers are the ones supplied;
 the rest are sensible placeholders that should be replaced with the company's
 real details.
 
-1. **Email address** — currently `info@symmetrixholdings.com`. Change it in
-   `assets/js/main.js` (the `data-mailto` fallback) and across the pages:
+1. **Public email address** — currently `info@symmetrixholdings.com` across the
+   pages. Form submissions have a separate destination,
+   `symmetrixholdings@gmail.com`, configured in the contact form action:
    ```bash
    grep -rl "info@symmetrixholdings.com" . --include="*.html" --include="*.js" \
      | xargs sed -i "s/info@symmetrixholdings.com/YOUR@EMAIL/g"
@@ -277,18 +279,24 @@ real details.
 5. **Social profiles** — the footer deliberately links only to real, working
    channels (WhatsApp, email, phone). Add Facebook / LinkedIn / Instagram links
    to the `.socials` block in the footer when the accounts exist.
-6. **Form delivery** — the enquiry form has no server, so it currently opens the
-   visitor's mail client with the enquiry pre-filled. To have it posted instead,
-   add an endpoint (Formspree, Netlify Forms, Web3Forms, or your own script) as
-   the form's `action`:
-   ```html
-   <form class="form" id="enquiry-form" method="post" action="https://your-endpoint">
-   ```
-   `main.js` detects the `action` attribute and steps out of the way.
-7. **Photography.** The only photograph is the city skyline used as the brand
-   backdrop. It is an atmospheric scene, not a picture of the company's own
-   office or people, and the copy never presents it as one. Real photography of
-   your people, premises and work is still the biggest visual upgrade left.
+6. **Form delivery** — all divisions use the enquiry form on `contact.html`,
+   which posts directly to `https://formsubmit.co/symmetrixholdings@gmail.com`.
+   FormSubmit emails the submitted fields in a table, uses the visitor's email
+   as Reply-To, and presents its own verification/confirmation page. Custom
+   validation and division questions remain in `main.js`; browser-required
+   validation still works without JavaScript. The `_honey` field and default
+   reCAPTCHA protect against spam. No email application is opened.
+   **Activation required:** submit an enquiry from the deployed website, then
+   open the FormSubmit confirmation email in `symmetrixholdings@gmail.com`
+   and activate delivery. Check spam if needed. After activation, submit a
+   clearly labelled test for each division and verify the received fields and
+   Reply-To address. Delivery has not been confirmed until these checks pass.
+   Documentation: https://formsubmit.co/documentation
+7. **Photography.** The site is entirely type, brand geometry and colour — there
+   is not a single photograph on it. That was deliberate: no authentic images of
+   the company exist here, and stock or generated pictures of "our team" or "our
+   office" would misrepresent a real business. Commissioning real photography of
+   your people, premises and work is the single biggest visual upgrade left.
 8. **Claims to verify** — the site states a one-business-day response target,
    free initial consultations, and written quotations before work starts. These
    are commitments; confirm the business can meet them, or edit the wording.
